@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :users
+  resources :users, only: [:show]
+  
   get 'tags/index'
 
 
@@ -11,9 +14,14 @@ Rails.application.routes.draw do
   resources :posts do
   	resources :comments
 	end
+
   resources :tags
+
+
   root "posts#index"
+
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  
+  #match '/users/:id', to: 'users#show', via: 'get'
   match "*path", to: "application#catch_404", via: :all
 end

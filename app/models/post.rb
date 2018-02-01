@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-	validates :name, presence: true
+	#validates :name
 
 	has_and_belongs_to_many :tags
 	has_many :comments

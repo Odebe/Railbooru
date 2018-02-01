@@ -1,0 +1,29 @@
+<div class="row">
+<%= button_to "Add tag", new_tag_path, class: "btn btn-dark", method: :get %>
+</div>
+<div class="row">
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Images</th>
+      <th scope="col">Name</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tags.each do |tag| %>
+    	<tr>
+    		<td><%= tag.posts.count %></td>
+    		<td><%= link_to tag.name, tag_url(tag) %></td>
+    		<td><%= link_to "change", edit_tag_path(tag) %></td>
+    		<td><%= link_to "delete", tag, method: :delete %></td>
+    		<td></td>
+    		<td></td>
+    	</tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,40 @@
+
+<div class="row">
+	<div class="col-lg-2 col-md-4 col-sm-12">
+
+		<div class="sidebar-module sidebar-module-inset">
+		<%= link_to 'New Post', new_post_path %>
+            <h4>Теги</h4>
+            <p>
+            	<% @uniq_tags.each do |t| %>
+            			<%= link_to t.name, gallery_index_url(tag: t.name) %>
+            			<span class="badge badge-dark"><%= t.posts.count %></span>
+									<br>
+            	<% end %>
+    				</p>
+    </div>
+	</div>
+	<div class="col-lg-10 col-md-8 col-sm-12">
+<!-- 	  <% @posts.each_slice(3) do |row| %>
+	    <% row.each do |post| %>
+	      <%= link_to (image_tag post.image.thumb.url), post_path(post) %>
+	    <% end %>
+	  <% end %> 
+image-block  , class: "card img-fluid"
+	  -->
+		  <div class="row">
+		  			<% @posts.each do |post|%>
+		  				<div class="post">
+			  				<%= link_to (image_tag post.image.thumb.url), post_path(post) %>
+			  			</div>
+		  			<% end %>
+			</div>
+		  <p>
+		 			<ol class="breadcrumb">
+						  <% @pages_count.times do |i| %>
+							  	<li class="breadcrumb-item"><%= link_to "#{i}", gallery_index_path(page: i,limit: @limit ,tag: @tags_string) %> </li>
+						  <% end %>
+				  </ol>
+			</p>
+	</div>
+</div>

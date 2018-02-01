@@ -1,0 +1,6 @@
+
+        <% @posts.each do |post| %>
+            <div class="image-block">
+              <%= link_to (image_tag post.image.thumb.url, class: "card img-fluid"), post_path(post) %>
+            </div>
+        <% end %>

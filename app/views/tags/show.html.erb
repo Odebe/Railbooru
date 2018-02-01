@@ -1,0 +1,7 @@
+All images with tag: <%= @tag.name %>
+<br />
+Count: <%= @posts.count %>
+<br />
+<% @posts.each do |post|%>
+	<%= link_to (image_tag post.image.thumb), post_path(post) %>
+<% end %>

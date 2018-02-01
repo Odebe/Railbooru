@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+<div class="row">
+	<div class="col-lg-2 col-md-4">
+
+		<div class="sidebar-module sidebar-module-inset">
+		<%= link_to 'Back', posts_path%>
+		<%= link_to 'Edit', edit_post_path(@post) %>
+		<%= link_to 'Delete', post_path(@post), method: :delete %>
+            <h4>Теги</h4>
+            <p>
+            		<% @post.tags.each do |tag| %>
+										<%= link_to tag.name, gallery_index_url(tag: tag.name) %>
+										<br>
+								<% end %>
+            </p>
+            <h4>Информация</h4>
+            <p>
+            		Name: <%= @post.name %><br>
+            		Date: <%= @post.created_at %>
+            </p>
+
+    </div>
+	</div>
+		<div class="col-lg-10 col-md-8 col-sm-12">
+	<div class="row">
+			<div id="post-image">
+							<%= link_to "Image was scaled. Link to full image (пока нет)","#"  if @post.has_sample?%><br>
+				<%= post_show_image(@post) {|image| image_tag image} %>	
+			</div>
+		
+	</div>
+
+	<div class="my-3 p-3 bg-white rounded box-shadow">
+		<h4>Comments</h4>
+			<% @post.comments.each do |comment| %>
+				<dt><%= comment.commenter %> <small><%= comment.created_at.strftime("%H-%M, %Y-%m-%d") %></small></dt>
+				<dd><%= comment.body %></dd>
+			<% end  %>
+	</div>
+		<div class="my-3 p-3 bg-white rounded box-shadow">
+					<h4>Add comment</h4>
+			<%= form_with(model: [@post, @post.comments.build], local: true) do |form| %>
+				<p>
+					<%= form.label :commenter %>
+					<%= form.text_field :commenter %>
+				</p>
+				<p>
+					<%= form.label :body %>
+					<%= form.text_area :body %>
+				</p>
+				<p>
+					<%= form.submit %>
+				</p>
+			<% end %>
+		</div>
+
+
+<br>
+
+</div>
+</div>

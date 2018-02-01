@@ -12,24 +12,29 @@
   <% end %>
 
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :post_path %>
-  </div>
-
-
-  <div class="field">
-    <%= form.label :image %>
-    <%= form.file_field :image, id: :post_path %>
-  </div>
-
-    <div>
-      <%= form.label :tags %>
-     <!--  <%= form.collection_select(:tag_id, Tag.all, :id, :name) %> -->
-     <%= form.text_area :tags_array, value: post.tags.map{|t| t.name}.join(" ") %>
+  <div class="form-group row">
+    <%= form.label :name, class: "col-sm-1 col-form-label" %>
+    <div class="col-sm-11">
+      <%= form.text_field :name, id: :post_path, class: "form-control" %>
     </div>
+  </div>
 
+
+  <div class="form-group row">
+    <%= form.label :image, class: "col-sm-1 col-form-label", for: :post_path_image%>
+    <div class="col-sm-11">
+      <%= form.file_field :image, id: :post_path_image, class: "form-control-file" %>
+    </div>
+  </div>
+
+    <div class="form-group row">
+      <%= form.label :tags, class: "col-sm-1 col-form-label"%>
+     <!--  <%= form.collection_select(:tag_id, Tag.all, :id, :name) %> -->
+     <div class="col-sm-11">
+      <%= form.text_area :tags_array, value: post.tags.map{|t| t.name}.join(" "), class: "form-control" %>
+      </div>
+    </div>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary mb-2" %>
   </div>
 <% end %>

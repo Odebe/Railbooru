@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :users, only: [:show]
+  #resources :users, only: [:show]
   
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
   get 'tags/index'
 
 

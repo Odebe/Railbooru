@@ -3,7 +3,7 @@
 	<div class="col-lg-2 col-md-5 col-sm-12 ">
 
 		<div id="tags">
-		
+			
 				<%= link_to 'Back', posts_path%>
 				<%= link_to 'Edit', edit_post_path(@post) %>
 				<%= link_to 'Delete', post_path(@post), method: :delete %>
@@ -36,28 +36,27 @@
 			<% @post.comments.each do |comment| %>
 				<div class="card">
 					<div class="card-block">
-						<h4 class="card-title"><%= comment.commenter %></h4>
+						<h4 class="card-title"><%= comment.user.username%></h4>
 						<h6 class="card-subtitle mb-2 text-muted">
 							No.<%= comment.id %> |<%= comment.created_at.strftime("%H:%M, %d.%m.%Y") %>
 						</h6>
 						<p><%= comment.body %></p>
-						<a href="#" class="card-link">Ответить</a>
+						<% if user_signed_in? %>
+							<a href="#" class="card-link">Ответить</a>
+						<% end %>
+						<% if  comment.user == current_user %>
+							<%= link_to "Удалить", post_comment_url(@post,comment), method: :delete %>
+						<%  end%>
 					</div>
 				</div>
 			<% end  %>
 	</div>
+	<% if user_signed_in?  %>
 		<div class="my-3 p-3 bg-white rounded box-shadow">
 					<h4>Add comment</h4>
 			<%= form_with(model: [@post, @post.comments.build], local: true) do |form| %>
 				<div class="form-group row">
-					<%= form.label :commenter, class: "col-sm-2 col-form-label" %>
-					    <div class="col-sm-10">
-      					<%= form.text_field :commenter, class: "form-control" %>
-    					</div>
-				</div>
-				<div class="form-group row">
-					<%= form.label :body, class: "col-sm-2 col-form-label" %>
-					 	<div class="col-sm-10">
+					 	<div class="col-sm-12">
 							<%= form.text_area :body, class: "form-control" %>
 						</div>
 				</div>
@@ -66,7 +65,11 @@
 			  </div>
 			<% end %>
 		</div>
-
+		<% else %>
+				<div class="my-3 p-3 bg-danger box-shadow">
+					<%= link_to "Войдите, чтобы оставить комментарий.", new_user_session_path, class: "text-light" %>
+				</div>
+	<% end %>
 
 <br>
 

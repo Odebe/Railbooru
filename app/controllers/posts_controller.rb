@@ -2,9 +2,11 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :get_tag_array, only: [:create, :update]
 
-    before_action :set_limit, only: [:index]
+  before_action :set_limit, only: [:index]
   before_action :set_page, only: [:index]
   before_action :set_tags, only: [:index]
+
+  before_action :get_memory
 
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_post
   # GET /posts
@@ -145,6 +147,11 @@ class PostsController < ApplicationController
   end
 
   private
+
+    def get_memory
+      mem = GetProcessMem.new
+      puts mem.inspect
+    end
 
     def add_tags(tags)
       tags.each do |tag|

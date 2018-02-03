@@ -17,7 +17,8 @@
             <h4>Информация</h4>
             <p>
             		Name: <%= @post.name %><br>
-            		Date: <%= @post.created_at %>
+            		Date: <%= @post.created_at %><br>
+            		Uploader: <%= @post.user.username %>
             </p>
 
     </div>
@@ -44,9 +45,7 @@
 						<% if user_signed_in? %>
 							<a href="#" class="card-link">Ответить</a>
 						<% end %>
-						<% if  comment.user == current_user %>
 							<%= link_to "Удалить", post_comment_url(@post,comment), method: :delete %>
-						<%  end%>
 					</div>
 				</div>
 			<% end  %>

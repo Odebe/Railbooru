@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  load_and_authorize_resource 
+
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :get_tag_array, only: [:create, :update]
 
@@ -84,14 +86,15 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
+    post = Post.new(post_params) do |post|
+      post.user = current_user
+    end
 
-    #add_tags(@tags)
     Tag.add_tags(@tags)
-    @post.add_tags(@tags)
+    post.add_tags(@tags)
 
     respond_to do |format|
-      if @post.save
+      if post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else

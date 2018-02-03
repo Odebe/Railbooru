@@ -31,6 +31,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
+gem 'cancancan', '~> 2.0'
 
 gem 'get_process_mem'
 
@@ -39,6 +40,8 @@ gem "mini_magick"
 gem 'carrierwave', '~> 1.0'
 gem 'file_validators'
 gem 'carrierwave-imageoptimizer'
+
+gem 'rails-erd', require: false, group: :development
 
 
 gem 'popper_js', '~> 1.12.9'

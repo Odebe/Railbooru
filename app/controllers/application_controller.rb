@@ -7,6 +7,11 @@ class ApplicationController < ActionController::Base
 	 logger.error 'Routing error occurred'
 	 render plain: '404 Not found', status: 404 
 	end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    render plain: '403 Access Denied', status: 403
+  end
+
 	def catch_404
 		raise ActionController::RoutingError.new(params[:path])
 	end

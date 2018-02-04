@@ -48,9 +48,10 @@ class PostsController < ApplicationController
                                             }
 
       @posts = Post.find_by_sql(query)
-      #posts_count = Post.find_by_sql(count_query
+      posts_count = Post.count_by_sql(count_query)
+
       unless @limit == 0
-        @pages_count = 50 #(posts_count.count/@limit).to_i+1
+        @pages_count = (posts_count/@limit).to_i+1
       end   
     end
     #@posts = Post.order(:id).reverse_order.offset(@offset).limit(@limit)

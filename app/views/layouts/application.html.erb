@@ -36,7 +36,8 @@
         </ul>
 
         <% if user_signed_in? %>
-				  Logged in as <strong><%= current_user.email %></strong>.
+				  <span class=" text-light"> Logged in as <%= link_to current_user.username, user_url(current_user)%>  | </span>
+
 				  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link text-light' %> |
 				  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link text-secondary'  %>
 				<% else %>

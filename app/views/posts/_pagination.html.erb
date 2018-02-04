@@ -1,0 +1,9 @@
+<p>
+  <ol class="breadcrumb bg-dark">
+    <% @pages_count.times do |i| %>
+    	<li class="breadcrumb-item">
+    		<%= link_to "#{i}", posts_url(page: i,limit: @limit ,tag: @tags_string) %>
+    	</li>
+    <% end %>
+  </ol>
+</p>

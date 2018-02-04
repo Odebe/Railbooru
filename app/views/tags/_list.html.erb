@@ -1,0 +1,10 @@
+
+	<h4>Теги</h4>
+<ul>
+		<% @tags.each do |t| %>
+		    <li>
+			    <%= link_to t.name, posts_url(tag: t.name), class: "tag-link" %>
+			    <span class="badge badge-dark"><%= t.posts.count %></span>
+			  </li>
+		<% end %>
+</ul>

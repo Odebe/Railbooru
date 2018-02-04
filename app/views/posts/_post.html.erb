@@ -1,6 +1,5 @@
-
-        <% @posts.each do |post| %>
-            <div class="image-block">
-              <%= link_to (image_tag post.image.thumb.url, class: "card img-fluid"), post_path(post) %>
-            </div>
-        <% end %>
+                <span class="thumbnail-placeholder">
+                  <div class="thumbnail-preview col-sm-12">
+                    <%= link_to (image_tag post.image.thumb.url, class: "img-fluid"), post_path(post)%>
+                  </div>
+                </span>

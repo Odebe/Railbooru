@@ -35,13 +35,17 @@ a img:hover {
 }
 
 
-#tags {
+#left_bar {
+	display:block;
 	border-right: 2px solid #f0f0f0;
+	ul {
+		list-style-type:none;
+		padding: 0;
+	}
 }
 
-
 /*
-
+height:auto;
 
 
 a,

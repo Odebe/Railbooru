@@ -1,0 +1,16 @@
+	<div class="my-3 p-3 bg-white rounded box-shadow">
+		<h4>Comments</h4>
+				<div class="card">
+					<div class="card-block">
+						<h4 class="card-title"><%= comment.user.username%></h4>
+						<h6 class="card-subtitle mb-2 text-muted">
+							No.<%= comment.id %> |<%= comment.created_at.strftime("%H:%M, %d.%m.%Y") %>
+						</h6>
+						<p><%= comment.body %></p>
+						<% if user_signed_in? %>
+							<a href="#" class="card-link">Ответить</a>
+							<%= link_to "Удалить", post_comment_url(@post,comment), method: :delete %>
+						<% end %>
+					</div>
+				</div>
+				</div>

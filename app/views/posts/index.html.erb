@@ -1,8 +1,9 @@
 
 <div class="row">
-  <div class="col-lg-2 col-md-5 col-sm-12 ">
+  <div class="col-lg-2 col-md-2 col-sm-12 ">
 
-    <div id="tags">
+    <div id="left_bar">
+
     <% if user_signed_in? %>
       <%= button_to "New post", new_post_path, class: "btn btn-dark", method: :get %>
     <% end %>
@@ -11,39 +12,21 @@
         <div class="col-sm-10">
           <input type="email" class="form-control form-control-sm" id="colFormLabelSm" placeholder="type tags here">
           <button type="button" class="btn btn-primary btn-sm" id="search_button">Search</button>
-
         </div>
-
       </div>
-            <h4>Теги</h4>
-            <p>
-              <% @uniq_tags.each do |t| %>
-                  <%= link_to t.name, posts_url(tag: t.name), class: "tag-link" %>
-                  <span class="badge badge-dark"><%= t.posts.count %></span>
-                  <br>
-              <% end %>
-            </p>
+
+         <%= render "tags/list.html.erb" %>
+
     </div>
   </div>
-    <div class="col-lg-10 col-md-8 col-sm-12">
+
+    <div class="col-lg-10 col-md-10 col-sm-12">
+    
       <div class="row" id="posts">
-            <% @posts.each do |post|%>
-              <% unless post.image.blank? %>
-                <span class="thumbnail-placeholder">
-                  <div class="thumbnail-preview">
-                    <%= link_to (image_tag post.image.thumb.url), post_path(post)%>
-                    <%= post.id if post.image.blank?  %>
-                  </div>
-                </span>
-              <% end %>
-            <% end %>
+        <%= render @posts %>
       </div>
-      <p>
-          <ol class="breadcrumb bg-dark">
-              <% @pages_count.times do |i| %>
-                  <li class="breadcrumb-item"><%= link_to "#{i}", posts_url(page: i,limit: @limit ,tag: @tags_string) %> </li>
-              <% end %>
-          </ol>
-      </p>
+
+      <%= render "pagination.html.erb" %>
+
   </div>
 </div>

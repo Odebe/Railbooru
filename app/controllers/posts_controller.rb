@@ -54,23 +54,18 @@ class PostsController < ApplicationController
         @pages_count = (posts_count/@limit).to_i+1
       end   
     end
-    #@posts = Post.order(:id).reverse_order.offset(@offset).limit(@limit)
-
-    #redirect_to gallery_index_url #if @posts.count == 0
-
-      #@uniq_tags = Tag.joins(:posts).where(post_id: @posts.map{|p| p.id})
       tag_quiery = %{
         select tags.name, tags.id from tags
         inner join posts_tags on tags.id = posts_tags.tag_id
         where posts_tags.post_id in (#{@posts.map {|p| p.id}.join(", ")}) group by tags.name, tags.id
       }
-      @uniq_tags = Tag.find_by_sql(tag_quiery)#.map{|t| t.name}.uniq
-      #@uniq_tags = Tag.joins(:posts).where('posts_tags.post_id' => @posts.map{|p| p.id})
+      @tags = Tag.find_by_sql(tag_quiery)
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @tags = @post.tags
   end
 
   # GET /posts/new

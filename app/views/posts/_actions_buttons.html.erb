@@ -1,0 +1,7 @@
+	<% if user_signed_in? %>
+	<ul class="list-group">
+				<%= link_to 'Edit', edit_post_path(@post), class: "list-group-item list-group-item-action" %>
+				<%= link_to 'Back', posts_path, class: "list-group-item list-group-item-action"%>
+				<%= link_to 'Delete', post_path(@post), class: "list-group-item list-group-item-action", method: :delete %>
+	</ul>
+<% end %>

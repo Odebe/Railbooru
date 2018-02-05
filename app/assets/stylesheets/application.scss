@@ -13,6 +13,31 @@
 */
 @import "bootstrap";
 
+body {
+
+}
+html {
+  font-size: 14px;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 16px;
+  }
+}
+
 img {
 	vertical-align: middle;
 }
@@ -33,15 +58,21 @@ a img:hover {
    border: 1px solid #f0f0f0;
    padding: 5px;
 }
+.card {
+	margin-bottom: 10px;
+}
+
 
 
 #left_bar {
 	display:block;
-	border-right: 2px solid #f0f0f0;
+	//border-right: 2px solid #f0f0f0;
 	ul {
 		list-style-type:none;
 		padding: 0;
 	}
+	.card {
+	} 
 }
 
 /*

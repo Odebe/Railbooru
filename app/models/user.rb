@@ -15,6 +15,6 @@ class User < ApplicationRecord
   end
 
   def login
-  	@login || self.username || self.email
+  	@login || self.username #|| self.email
   end
 end

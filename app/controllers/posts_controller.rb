@@ -4,6 +4,8 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :get_tag_array, only: [:create, :update]
 
+  #before_action :set_tag_string, only: [:update, edit]
+
   before_action :set_limit, only: [:index]
   before_action :set_page, only: [:index]
   before_action :set_tags, only: [:index]
@@ -76,15 +78,12 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   def edit
     @tags_array = @post.tags.map {|tag| tag.name}
-    puts @tags_array
   end
 
   # POST /posts
   # POST /posts.json
   def create
-    post = Post.new(post_params) do |post|
-      post.user = current_user
-    end
+    post = current_user.posts.build(post_params)
 
     Tag.add_tags(@tags)
     post.add_tags(@tags)
@@ -152,23 +151,12 @@ class PostsController < ApplicationController
       puts mem.inspect
     end
 
-    def add_tags(tags)
-      tags.each do |tag|
-        tag = Tag.where(name: tag).first
-        if tag
-          @post.tags << tag unless @post.tags.include? tag
-        end
-      end
-    end
-
-    def remove_tags(tags)
-      @post.tags.each do |tag|
-        @post.tags.delete(tag) unless tags.include? tag.name
-      end
-    end
-
     def get_tag_array
       @tags = params[:post][:tags_array].split(" ")
+    end
+
+    def set_tag_string
+      @tags_string = post.tags.map{|t| t.name}.join(" ")
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_post

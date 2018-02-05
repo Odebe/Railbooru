@@ -4,25 +4,21 @@
 
     <div id="left_bar">
 
-    <% if user_signed_in? %>
-      <%= button_to "New post", new_post_path, class: "btn btn-dark", method: :get %>
-    <% end %>
-
       <div class="form-group row">
-        <div class="col-sm-10">
-          <input type="email" class="form-control form-control-sm" id="colFormLabelSm" placeholder="type tags here">
-          <button type="button" class="btn btn-primary btn-sm" id="search_button">Search</button>
+        <div class="col-sm-12">
+          <input type="search" class="form-control form-control-sm" id="colFormLabelSm" placeholder="type tags here">
+          <button type="button" class="btn btn-primary btn-sm btn-block" id="search_button">Search</button>
         </div>
       </div>
-
+      <div class="hidden-sm-down">
          <%= render "tags/list.html.erb" %>
-
+        </div>
     </div>
   </div>
-
     <div class="col-lg-10 col-md-10 col-sm-12">
-    
-      <div class="row" id="posts">
+      <%= session[:user_id] %>
+      <div class="row mx-auto" id="posts">
+
         <%= render @posts %>
       </div>
 
@@ -30,3 +26,6 @@
 
   </div>
 </div>
+<!-- 
+Post.joins(:tags).where(tags: {id: [...]}).group('posts.id').having('count(*) = ?', [...].count)
+ -->

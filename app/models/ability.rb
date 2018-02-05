@@ -13,6 +13,7 @@ class Ability
       can [:read, :create], [Post, Tag, Comment]
       can [:update, :destroy], Post, user_id: user.id
       can [:destroy, :delete], Comment, user_id: user.id
+      can [:read], User, id: user.id
       #can :manage, []
     end
 

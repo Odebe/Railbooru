@@ -33,7 +33,7 @@
     </nav>
 
    		<nav class="navbar navbar-toggleable-md navbar-inverse navbar-inverse" style="background-color: #536379;">
-        <ul class="navbar-nav mr-auto inline">
+        <ul class="navbar-nav mr-auto">
     <% if user_signed_in? %>
         <% if controller_name == "posts" %>
 
@@ -62,9 +62,23 @@
          <% end %> 
 
          <% if controller_name == "users" %>
-         		<%= link_to "Профиль", user_url(current_user), class: "nav-link" %>
-         		<%= link_to "Изменить", edit_user_registration_path, class: "nav-link" %>
+         		<li class="nav-item">
+         			<%= link_to "Профиль", user_url(current_user), class: "nav-link" %>
+         		</li>
+         		<li class="nav-item">
+         			<%= link_to "Изменить", edit_user_registration_path, class: "nav-link" %>
+         		</li>
+         		<li class="nav-item">
+							<%= link_to "Выйти", destroy_user_session_path, method: :delete, class: "nav-link"  %>
+         		</li>
          <% end %>
+
+         <% if controller_name == "tags" %>
+         		<li class="nav-item">
+         			<%= link_to "Добавить", new_tag_path, class: "nav-link" %>
+         		</li>      
+         <% end %>
+
 
          <% else %>
          	<li class="nav-item">

@@ -35,51 +35,11 @@
    		<nav class="navbar navbar-toggleable-md navbar-inverse navbar-inverse" style="background-color: #536379;">
         <ul class="navbar-nav mr-auto">
     <% if user_signed_in? %>
-        <% if controller_name == "posts" %>
+    		<!-- 
 
-          <li class="nav-item active">
-            <%= link_to "Добавить пост", new_post_path, class: "nav-link" %>
-          </li>
-
-          <% if action_name == "index" %>
-          	<%= link_to "Мои посты", "", class: "nav-link" %>
-          <% end %>
-
-          <% if action_name == "show"%>
-          	<% if can? :update, @post %>
-          		<li class="nav-item">
-            		<%= link_to "Изменить", edit_post_path(@post), class: "nav-link" %>
-          		</li>
-          	<% end %>
-
-          	<% if can? :destroy, @post %>
-          		<li class="nav-item">
-            		<%= link_to "Удалить", post_path(@post), class: "nav-link", method: :delete %>
-          	</li>
-          	<% end %>
-          <% end %>
-
-         <% end %> 
-
-         <% if controller_name == "users" %>
-         		<li class="nav-item">
-         			<%= link_to "Профиль", user_url(current_user), class: "nav-link" %>
-         		</li>
-         		<li class="nav-item">
-         			<%= link_to "Изменить", edit_user_registration_path, class: "nav-link" %>
-         		</li>
-         		<li class="nav-item">
-							<%= link_to "Выйти", destroy_user_session_path, method: :delete, class: "nav-link"  %>
-         		</li>
-         <% end %>
-
-         <% if controller_name == "tags" %>
-         		<li class="nav-item">
-         			<%= link_to "Добавить", new_tag_path, class: "nav-link" %>
-         		</li>      
-         <% end %>
-
-
+ -->
+ <%= controller_name %>
+ <%= action_name %>
          <% else %>
          	<li class="nav-item">
 					  <%= link_to "Sign up", new_user_registration_path, class: "nav-link"  %>

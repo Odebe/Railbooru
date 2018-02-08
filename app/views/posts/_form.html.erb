@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-
+<% if action_name != "edit" %>
   <div class="form-group row">
     <%= form.label :image, class: "col-sm-1 col-form-label", for: :post_path_image%>
     <div class="col-sm-11">
@@ -19,11 +19,21 @@
     </div>
   </div>
 
+  <% else %>
+               <span class="thumbnail-placeholder">
+                  <div class="thumbnail-preview">
+                    <%= image_tag post.image.thumb.url, class: "img-fluid"%>
+                  </div>
+                </span>
+
+<% end %>
+
+
     <div class="form-group row">
       <%= form.label :tags, class: "col-sm-1 col-form-label"%>
      <!--  <%= form.collection_select(:tag_id, Tag.all, :id, :name) %> -->
      <div class="col-sm-11">
-      <%= form.text_area :tags_array, value: post.tags.map{|t| t.name}.join(" "), class: "form-control" %>
+      <%= form.text_area :tags_string, value: tag_string_for(post), class: "form-control" %>
       </div>
     </div>
   <div class="actions">

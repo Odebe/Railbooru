@@ -1,2 +1,4 @@
-
-<%= @user.email %>
+<% @users.each do |user| %>
+	<p><%= user.username %></p>
+	<p>Comments: <%= user.comments.count %></p>
+<% end %>

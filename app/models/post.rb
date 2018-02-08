@@ -14,22 +14,8 @@ class Post < ApplicationRecord
 
 	mount_uploader :image, ImageUploader
 
-	def add_tags(tags)
-  	tags.each do |tag|
-    	tag = Tag.where(name: tag).first
-      if tag
-        self.tags << tag unless self.tags.include? tag
-      end
-    end
-  end
-
-  def remove_tags(tags)
-    self.tags.each do |tag|
-      self.tags.delete(tag) unless tags.include? tag.name
-    end
-  end
-
   def has_sample?
   	self.samp
   end
+  
 end

@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :users, only: [:show]
+  resources :users, only: [:show, :index]
   
   get 'tags/index'
 
 
-  get 'gallery/index'#, as: "gallery"
+  #get 'gallery/index'#, as: "gallery"
 =begin
   controller :gallery do
   	get "gallery" => :index

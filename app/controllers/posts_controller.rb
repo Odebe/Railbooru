@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   load_and_authorize_resource 
 
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_action :get_tag_array, only: [:create, :update]
+  #before_action :get_tag_array, only: [:create, :update]
 
   #before_action :set_tag_string, only: [:update, edit]
 
@@ -13,15 +13,11 @@ class PostsController < ApplicationController
   before_action :get_memory
 
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_post
+
   # GET /posts
   # GET /posts.json
   def index
-    #@posts = Post.order(:id).reverse_order
-
-    #@posts = Post.order(:id).reverse_order.offset(@offset).limit(@limit)
-    #query = "select * from posts p where not EXISTS (select * from tags t where name in ('#{@tags}') and not EXISTS (select * from Posts_Tags pt WHERE pt.post_id = p.id AND pt.tag_id = t.id))"
-
-
+ 
     unless @tags
       @posts = Post.order(:id).reverse_order.offset(@offset).limit(@limit)
       unless @limit == 0
@@ -56,12 +52,13 @@ class PostsController < ApplicationController
         @pages_count = (posts_count/@limit).to_i+1
       end   
     end
-      tag_quiery = %{
+
+      tag_query = %{
         select tags.name, tags.id from tags
         inner join posts_tags on tags.id = posts_tags.tag_id
         where posts_tags.post_id in (#{@posts.map {|p| p.id}.join(", ")}) group by tags.name, tags.id
       }
-      @tags = Tag.find_by_sql(tag_quiery)
+      @tags = Tag.find_by_sql(tag_query)
   end
 
   # GET /posts/1
@@ -83,13 +80,11 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    post = current_user.posts.build(post_params)
-
-    Tag.add_tags(@tags)
-    post.add_tags(@tags)
-
+    post_service = PostService.new(current_user, params)
+    post_service.create
+    
     respond_to do |format|
-      if post.save
+      if post_service.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
@@ -102,29 +97,11 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
-    Tag.add_tags(@tags)
-    @post.add_tags(@tags)
-    #add_tags(@tags)
-    @post.remove_tags(@tags)
-    #remove_tags(@tags)
+    post_service = PostService.new(current_user, params)
+    post_service.update
 
-=begin
-    #adding tags
-    tags.each do |tag|
-      tag = Tag.where(name: tag).first
-      if tag
-        @post.tags << tag unless @post.tags.include? tag
-      end
-    end
-
-    #removing tags
-    @post.tags.each do |tag|
-      @post.tags.delete(tag) unless tags.include? tag.name
-    end
-=end
-    #@post.tags << Tag.find(params[:post][:tag_id])
     respond_to do |format|
-      if @post.update(post_params)
+      if post_service.save
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -151,13 +128,6 @@ class PostsController < ApplicationController
       puts mem.inspect
     end
 
-    def get_tag_array
-      @tags = params[:post][:tags_array].split(" ")
-    end
-
-    def set_tag_string
-      @tags_string = post.tags.map{|t| t.name}.join(" ")
-    end
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
@@ -176,7 +146,6 @@ class PostsController < ApplicationController
 
     def set_limit
       if params[:limit]
-        #session[:limit] = params[:limit].to_i
         @limit = params[:limit].to_i
       else
         @limit = 20
@@ -186,9 +155,7 @@ class PostsController < ApplicationController
     def set_page
       if params[:page]
         @page = params[:page]
-        #session[:page] = params[:page]
         @offset = @limit * params[:page].to_i
-        #session[:page] = session[:limit] * session[:page].to_i
       else
         @offset = 0
       end
@@ -198,9 +165,9 @@ class PostsController < ApplicationController
       if params[:tag]
         @tags = params[:tag].split(" ").join("', '")
         @tags_string = params[:tag]
-        #@tag = tags_array.map {|t| Tag.where(name: t)}
       else
         @tags = false
       end
     end
+
 end

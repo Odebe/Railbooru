@@ -12,41 +12,22 @@
             <%= link_to "Теги", tags_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
+
             <% if user_signed_in? %>
             	<%= link_to "Аккаунт", user_url(current_user), class: 'nav-link' %>
-            <% else %>
-            	<%= link_to "Аккаунт", "", class: 'nav-link disabled' %>
             <% end %>
+
           </li>
         </ul>
-
-        <% if user_signed_in? %>
-				  <span class=" text-light"> Logged in as <%= link_to current_user.username, user_url(current_user)%>  | </span>
-
-				  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link text-light' %> |
-				  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link text-secondary'  %>
-				<% else %>
-				  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link text-light'  %> |
-				  <%= link_to "Login", new_user_session_path, :class => 'navbar-link text-light'  %>
-				<% end %>
       </div>
     </nav>
 
-   		<nav class="navbar navbar-toggleable-md navbar-inverse navbar-inverse" style="background-color: #536379;">
-        <ul class="navbar-nav mr-auto">
-    <% if user_signed_in? %>
-    		<!-- 
-
- -->
- <%= controller_name %>
- <%= action_name %>
+   	<nav class="navbar navbar-toggleable-md navbar-inverse navbar-inverse" style="background-color: #536379;">
+      <ul class="navbar-nav mr-auto">
+    		<% if user_signed_in? %>
+ 					<%= render second_nav_bar_for(controller_name) %>
          <% else %>
-         	<li class="nav-item">
-					  <%= link_to "Sign up", new_user_registration_path, class: "nav-link"  %>
-					</li>
-					<li class="nav-item">
-					  <%= link_to "Login", new_user_session_path, class: "nav-link"  %>
-					 </li>
-          <% end %>
-        </ul>
-    	</nav>
+         	<%= render second_nav_bar_for("guest") %>
+         <% end %>
+       </ul>
+    </nav>

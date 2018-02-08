@@ -17,7 +17,7 @@
 		<div class="row">
 				<div id="post-image">
 					<%= link_to "Image was scaled. Link to full image (пока нет)","#"  if @post.has_sample?%><br>
-					<%= post_show_image(@post) {|image| image_tag image, class: "img-fluid"} %>	
+					<%= image_tag link_to_image(@post), class: "img-fluid"%>
 				</div>
 			
 		</div>

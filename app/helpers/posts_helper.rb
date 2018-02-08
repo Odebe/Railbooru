@@ -1,10 +1,11 @@
 module PostsHelper
 
-	def post_show_image(post)
-		if post.has_sample?
-			yield(post.image.sample)
-		else
-			yield(post.image)
-		end
-	end
+  def tag_string_for(post)
+    post.tags.map{|t| t.name}.join(" ")
+  end
+
+  def link_to_image(post)
+    post.has_sample? ? post.image.sample : post.image
+  end
+
 end

@@ -16,13 +16,13 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
- 
-    unless @tags.any?
-      @posts = Post.order(:id).reverse_order.page params[:page]
-    else
-      @posts = Post.joins(:tags).where(tags: {name: @tags}).group('posts.id').having('count(*) = ?', @tags.count).page params[:page] 
-    end
-      @tags = Tag.joins(:posts).where(posts: {id: @posts.ids}).group([:id,:name])
+    @posts =
+      unless @tags.any?
+        Post.order(:id).reverse_order.page params[:page]
+      else
+        Post.joins(:tags).where(tags: {name: @tags}).group('posts.id').having('count(*) = ?', @tags.count).order(:id).reverse_order.page params[:page] 
+      end
+    @tags = Tag.joins(:posts).where(posts: {id: @posts.ids}).limit(25).group([:id,:name]).order(:name)
   end
 
   # GET /posts/1
@@ -38,7 +38,9 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @tags_array = @post.tags.map {|tag| tag.name}
+    #@tags_array = @post.tags.map {|tag| tag.name}
+    @tags_array = Tag.select(:name).joins(:posts).where(posts: {id: @post.id})
+    #@post.tags
   end
 
   # POST /posts
@@ -111,15 +113,6 @@ class PostsController < ApplicationController
         @limit = params[:limit].to_i
       else
         @limit = 20
-      end
-    end
-
-    def set_page
-      if params[:page]
-        page = params[:page]
-        @offset = @limit * params[:page].to_i
-      else
-        @offset = 0
       end
     end
 

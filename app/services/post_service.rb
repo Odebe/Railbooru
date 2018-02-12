@@ -37,14 +37,22 @@ class PostService
     tags_array.each do |tag|
       tag = Tag.where(name: tag).first
       if tag
-        @post.tags << tag unless @post.tags.include? tag
+        #tag.posts << @post unless @post.tags.include? tag
+        unless @post.tags.include? tag
+          #tag.posts << @post
+          @post.tags << tag 
+          tag.update(posts_count: tag.posts_count+1)
+        end
       end
     end
   end
   
   def remove_tags_from_post(tags_array)
     @post.tags.each do |tag|
-      @post.tags.delete(tag) unless tags_array.include? tag.name
+      unless tags_array.include? tag.name
+        @post.tags.destroy(tag)
+        tag.update(posts_count: tag.posts_count-1)
+      end
     end
   end
 end

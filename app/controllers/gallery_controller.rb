@@ -15,17 +15,6 @@ class GalleryController < ApplicationController
   			@pages_count = (Post.count/@limit).to_i+1
   		end
   	else
-			query = %{	SELECT *
-										FROM posts p
-										WHERE NOT EXISTS (SELECT * FROM Tags t
-										      WHERE name IN ('#{@tags}')
-										            AND NOT EXISTS
-										                      (SELECT * FROM Posts_Tags pt
-										                       WHERE pt.post_id = p.id
-										                       AND pt.tag_id = t.id))
-										                       	 limit #{@limit}
-											                       offset #{@offset}
-										                       	}
 	  	@posts = Post.find_by_sql(query)
 	  	#posts_count = Post.find_by_sql(count_query
 			unless @limit == 0

@@ -32,7 +32,7 @@ class PostService
 
   def create_new_tags
     @tags_array.each do |tag|
-      Tag.create(name: tag) if Tag.where(name: tag).count == 0
+      Tag.create(name: tag) if Tag.where(name: tag).any?
     end
   end
 

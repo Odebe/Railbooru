@@ -7,8 +7,7 @@ class PostsController < ApplicationController
   #before_action :set_tag_string, only: [:update, edit]
 
   before_action :set_limit, only: [:index]
-  before_action :set_page, only: [:index]
-  before_action :set_tags, only: [:index]
+  before_action :get_tags, only: [:index]
 
   before_action :get_memory
 
@@ -18,51 +17,12 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
  
-    unless @tags
+    unless @tags.any?
       @posts = Post.order(:id).reverse_order.page params[:page]
-      unless @limit == 0
-        @pages_count = (Post.count/@limit).to_i+1
-      end
     else
-#Vehicle.joins(:features).where(features: {id: feature_ids}).group('vehicles.id').having('count(*) = ?', feature_ids.count)
-
-      query = %{  SELECT *
-                    FROM posts p
-                    WHERE NOT EXISTS (SELECT * FROM Tags t
-                          WHERE name IN ('#{@tags}')
-                                AND NOT EXISTS
-                                          (SELECT * FROM Posts_Tags pt
-                                           WHERE pt.post_id = p.id
-                                           AND pt.tag_id = t.id))
-                                             limit #{@limit}
-                                             offset #{@offset}
-                                            }
-      count_query = %{  SELECT count(*)
-                    FROM posts p
-                    WHERE NOT EXISTS (SELECT * FROM Tags t
-                          WHERE name IN ('#{@tags}')
-                                AND NOT EXISTS
-                                          (SELECT * FROM Posts_Tags pt
-                                           WHERE pt.post_id = p.id
-                                           AND pt.tag_id = t.id))
-                                            }
-
-      #@posts = Post.find_by_sql(query)
-      @posts = Post.joins(:tags).where(tags: {name: @tags}).group('posts.id').having('count(*) = ?', @tags.count).page params[:page]
-      puts @posts
-      posts_count = 50 #Post.joins(:tags).where(tags: {name: @tags}).group('posts.id').having('count(*) = ?', @tags.count).all.count #Post.count_by_sql(count_query)
-      puts posts_count
-      unless @limit == 0
-        @pages_count = (posts_count/@limit).to_i+1
-      end   
+      @posts = Post.joins(:tags).where(tags: {name: @tags}).group('posts.id').having('count(*) = ?', @tags.count).page params[:page] 
     end
-
-      tag_query = %{
-        select tags.name, tags.id from tags
-        inner join posts_tags on tags.id = posts_tags.tag_id
-        where posts_tags.post_id in (#{@posts.map {|p| p.id}.join(", ")}) group by tags.name, tags.id
-      }
-      @tags = Tag.find_by_sql(tag_query)
+      @tags = Tag.joins(:posts).where(posts: {id: @posts.ids}).group([:id,:name])
   end
 
   # GET /posts/1
@@ -165,17 +125,33 @@ class PostsController < ApplicationController
       end
     end
 
-    def set_tags
+    def get_tags
       @tags = Array.new
       if params[:tag]
         params[:tag].split(" ").each do |t|
           @tags << t
-        end#.join("', '")
-        @tags_string = params[:tag]
-      else
-        @tags = false
+        end
       end
-      puts "#{@tags}"
     end
 
 end
+
+=begin
+      query = %{  SELECT *
+                    FROM posts p
+                    WHERE NOT EXISTS (SELECT * FROM Tags t
+                          WHERE name IN ('#{@tags}')
+                                AND NOT EXISTS
+                                          (SELECT * FROM Posts_Tags pt
+                                           WHERE pt.post_id = p.id
+                                           AND pt.tag_id = t.id))
+                                             limit #{@limit}
+                                             offset #{@offset}
+                                            }
+
+tag_query = %{
+        select tags.name, tags.id from tags
+        inner join posts_tags on tags.id = posts_tags.tag_id
+        where posts_tags.post_id in (#{@posts.map {|p| p.id}.join(", ")}) group by tags.name, tags.id
+      }
+=end                                            

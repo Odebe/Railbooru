@@ -45,7 +45,6 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     post_service = PostService.new(current_user, params)
-    post_service.create
     
     respond_to do |format|
       if post_service.save
@@ -62,7 +61,6 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1.json
   def update
     post_service = PostService.new(current_user, params)
-    post_service.update
 
     respond_to do |format|
       if post_service.save

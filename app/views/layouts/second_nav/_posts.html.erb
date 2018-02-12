@@ -6,6 +6,7 @@
           <% end %>
 
           <% if action_name == "show"%>
+          
           	<% if can? :update, @post %>
           		<li class="nav-item">
             		<%= link_to "Изменить", edit_post_path(@post), class: "nav-link" %>

@@ -12,7 +12,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # storage :fog
 
   process :set_name
-  process optimize: [level: 7]
+  process optimize: [level: 2]
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -69,7 +69,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
     def too_big?(file)
-      #puts store_dimensions
       width, height = MiniMagick::Image.open(file.file)[:dimensions]
       if width > 800 || height > 600
         model.update(samp: true)
@@ -78,6 +77,4 @@ class ImageUploader < CarrierWave::Uploader::Base
         false
       end
     end
-
-
 end

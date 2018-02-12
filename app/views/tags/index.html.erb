@@ -3,6 +3,7 @@
 	<table class="table">
 	  <thead class="thead-light">
 	    <tr>
+	    	<th scope="col">Id</th>
 	      <th scope="col">Images</th>
 	      <th scope="col">Name</th>
 	      <th scope="col"></th>
@@ -14,6 +15,7 @@
 	  <tbody>
 	    <% @tags.each do |tag| %>
 	    	<tr>
+	    		<td><%= tag.id %></td>
 	    		<td><%= tag.posts.count %></td>
 	    		<td><%= link_to tag.name, tag_url(tag) %></td>
 	    		<td><%= link_to "change", edit_tag_path(tag) %></td>

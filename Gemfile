@@ -33,6 +33,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'cancancan', '~> 2.0'
 
+
+gem 'kaminari'
+
+
 gem 'get_process_mem'
 
 gem "mini_magick"

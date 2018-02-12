@@ -19,11 +19,13 @@ class PostsController < ApplicationController
   def index
  
     unless @tags
-      @posts = Post.order(:id).reverse_order.offset(@offset).limit(@limit)
+      @posts = Post.order(:id).reverse_order.page params[:page]
       unless @limit == 0
         @pages_count = (Post.count/@limit).to_i+1
       end
     else
+#Vehicle.joins(:features).where(features: {id: feature_ids}).group('vehicles.id').having('count(*) = ?', feature_ids.count)
+
       query = %{  SELECT *
                     FROM posts p
                     WHERE NOT EXISTS (SELECT * FROM Tags t
@@ -45,9 +47,11 @@ class PostsController < ApplicationController
                                            AND pt.tag_id = t.id))
                                             }
 
-      @posts = Post.find_by_sql(query)
-      posts_count = Post.count_by_sql(count_query)
-
+      #@posts = Post.find_by_sql(query)
+      @posts = Post.joins(:tags).where(tags: {name: @tags}).group('posts.id').having('count(*) = ?', @tags.count).page params[:page]
+      puts @posts
+      posts_count = 50 #Post.joins(:tags).where(tags: {name: @tags}).group('posts.id').having('count(*) = ?', @tags.count).all.count #Post.count_by_sql(count_query)
+      puts posts_count
       unless @limit == 0
         @pages_count = (posts_count/@limit).to_i+1
       end   
@@ -154,7 +158,7 @@ class PostsController < ApplicationController
 
     def set_page
       if params[:page]
-        @page = params[:page]
+        page = params[:page]
         @offset = @limit * params[:page].to_i
       else
         @offset = 0
@@ -162,12 +166,16 @@ class PostsController < ApplicationController
     end
 
     def set_tags
+      @tags = Array.new
       if params[:tag]
-        @tags = params[:tag].split(" ").join("', '")
+        params[:tag].split(" ").each do |t|
+          @tags << t
+        end#.join("', '")
         @tags_string = params[:tag]
       else
         @tags = false
       end
+      puts "#{@tags}"
     end
 
 end

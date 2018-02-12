@@ -50,6 +50,14 @@ a img:hover {
 
 	/*margin-left: 35px; */
 }
+.paginator {
+		a {
+			color: #6c757d;
+		}
+		a:hover{
+			color: #f8f9fa;
+		}
+}
 
 #posts .thumbnail-preview {
 	display: inline-block;

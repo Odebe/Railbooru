@@ -4,12 +4,8 @@
 
     <div id="left_bar">
 
-      <div class="form-group row">
-        <div class="col-sm-12">
-          <input type="text" class="form-control form-control-sm" id="searchForm" placeholder="type tags here" name="tags">
-          <%= button_to "Искать", posts_url, class: "btn btn-primary btn-sm btn-block", id:"search_button", query: "123" %>
-        </div>
-      </div>
+    <%= render "layouts/search_form.html.erb" %>
+    
       <div class="hidden-sm-down">
          <%= render "tags/list.html.erb" %>
         </div>

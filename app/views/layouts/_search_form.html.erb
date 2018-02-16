@@ -1,0 +1,8 @@
+      <div class="form-group row">
+        <div class="col-sm-12">
+        <%= form_tag(posts_path, method: :get) do%>
+        	<%= search_field_tag :tag, nil, class: "form-control form-control-sm", id: "searchForm"%>
+        	<%= submit_tag "Искать", class: "btn btn-primary btn-sm btn-block", id:"search_button"%>
+        <% end %>
+        </div>
+      </div>

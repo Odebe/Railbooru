@@ -1,12 +1,14 @@
 				<div class="card">
 					<div class="card-block">
 	<h4 class="card-title">Теги</h4>
-<ul>
+<ul onload="addTag();">
 		<% @tags.each do |t| %>
-		    <li>
+		    <li class="tag_li">
 			    <%= link_to t.name, posts_url(tag: t.name), class: "tag-link" %>
 			    <span class="badge badge-dark"><%= t.posts_count %></span>
-			    <span class="badge  bg-secondary">+</span>
+			    <span class="badge  bg-secondary add_button">
+			    +
+			    </span>
 			  </li>
 		<% end %>
 </ul>

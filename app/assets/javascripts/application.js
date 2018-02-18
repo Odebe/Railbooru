@@ -16,8 +16,9 @@
 //= require popper
 // require bootstrap
 //= require bootstrap-sprockets
-//= require turbolinks
+// require turbolinks
 //= require_tree .
+
 $(function() {
 
   // We can attach the `fileselect` event to all file inputs on the page

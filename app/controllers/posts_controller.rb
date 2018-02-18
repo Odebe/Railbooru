@@ -17,10 +17,10 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts =
-      unless @tags.any?
-        Post.order(:id).reverse_order.page params[:page]
-      else
+      if @tags.any?
         Post.joins(:tags).where(tags: {name: @tags}).group('posts.id').having('count(*) = ?', @tags.count).order(:id).reverse_order.page params[:page] 
+      else
+        Post.order(:id).reverse_order.page params[:page]
       end
     @tags = Tag.joins(:posts).where(posts: {id: @posts.ids}).limit(25).group([:id,:name]).order(:name)
   end
@@ -109,20 +109,16 @@ class PostsController < ApplicationController
 
 
     def set_limit
-      if params[:limit]
-        @limit = params[:limit].to_i
-      else
-        @limit = 20
-      end
+      @limit = params[:limit].to_i if params[:limit]
     end
 
     def get_tags
-      @tags = Array.new
-      if params[:tag]
-        params[:tag].split(" ").each do |t|
-          @tags << t
+      @tags = 
+        if params[:tag]
+          params[:tag].split(" ").uniq
+        else
+          Array.new
         end
-      end
     end
 
 end

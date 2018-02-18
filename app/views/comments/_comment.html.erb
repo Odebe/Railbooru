@@ -1,13 +1,14 @@
 
-				<div class="card">
+				<div class="card comment">
 					<div class="card-block">
 						<h4 class="card-title"><%= comment.user.username%></h4>
 						<h6 class="card-subtitle mb-2 text-muted">
-							No.<%= comment.id %> |<%= comment.created_at.strftime("%H:%M, %d.%m.%Y") %>
+							No. <span class="comment_id"><%= comment.id %></span>
+							| <%= comment.created_at.strftime("%H:%M, %d.%m.%Y") %>
 						</h6>
-						<p><%= comment.body %></p>
+						<p><pre><%= comment.body %></pre></p>
 						<% if user_signed_in? %>
-							<a href="#" class="card-link">Ответить</a>
+							<a href="javascript:;" class="card-link reply_link" onclick="<%= "reply(#{comment.id});" %>">Ответить</a>
 							<%= link_to "Удалить", post_comment_url(@post,comment), method: :delete %>
 						<% end %>
 					</div>

@@ -11,12 +11,23 @@ class PostService
         Post.create(post_params)
       end
 
+    @errors = @post.errors
+    @post.errors.clear
+
     user.posts << @post
     update_tags(tags_array)
   end
 
-  def save
-    @post
+  def save?
+    !@errors.full_messages.any?
+  end
+
+  def errors
+    @errors.full_messages
+  end
+
+  def clear_errors
+    @post.errors.clear
   end
 
   private

@@ -67,4 +67,3 @@ function reply(comment_id) {
 	var comment_field = document.getElementById('new_comment_field');
 	comment_field.value += '>>' + comment_id + '\n';
 }
-

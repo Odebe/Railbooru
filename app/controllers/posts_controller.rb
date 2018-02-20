@@ -29,6 +29,7 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @tags = @post.tags
+    respond_to :html, :js
   end
 
   # GET /posts/new

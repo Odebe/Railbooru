@@ -1,0 +1,22 @@
+.container-fluid
+  .row
+    table.table
+      thead.thead-light
+        tr
+          th scope="col"  Id
+          th scope="col"  Images
+          th scope="col"  Name
+          th scope="col" 
+          th scope="col" 
+          th scope="col" 
+          th scope="col" 
+      tbody
+        - @tags.each do |tag|
+          tr
+            td= tag.id
+            td= tag.posts_count
+            td= link_to tag.name, tag_url(tag)
+            td= link_to "change", edit_tag_path(tag)
+            td= link_to "delete", tag, method: :delete
+            td
+            td

@@ -1,0 +1,8 @@
+- @users.each do |user|
+	p
+		span #{user.username}
+		br
+		span Comments: #{user.comments.count}
+		br
+		span 
+			a href="posts?user=#{user.username}" posts

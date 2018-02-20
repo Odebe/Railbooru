@@ -1,0 +1,11 @@
+.card.comment
+	.card-block
+		h4.card-title = comment.user.username
+		h6.card-subtitle.bb-2.text-muted
+			| No.
+			span.comment_id = comment.id
+			| | #{comment.created_at.strftime("%H:%M, %d.%m.%Y")}
+		p.comment_body = comment.body
+		- if user_signed_in?
+			a.card-link.reply_link href="javascript:;" Ответить
+			= link_to "Удалить", post_comment_url(@post,comment), method: :delete

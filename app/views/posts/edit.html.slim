@@ -1,0 +1,9 @@
+.row
+	.col-lg-2
+	.col-lg-8
+		h1 Изменение поста
+		= render 'form', post: @post, tags_array: @tags_array
+		= link_to 'Show', @post 
+		| \
+		= link_to 'Back', posts_path 
+	.col-lg-2

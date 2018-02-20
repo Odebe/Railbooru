@@ -7,7 +7,7 @@ module ApplicationHelper
       "registrations" => "users"
     }
     new_name = synonyms.has_key?(controller_name) ? synonyms[controller_name] : controller_name
-    return "layouts/second_nav/#{new_name}"
+    return "#{new_name}/nav_bar"
   end
   
   def active_link_for(controller, button_name)

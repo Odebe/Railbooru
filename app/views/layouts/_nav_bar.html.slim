@@ -1,0 +1,22 @@
+nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse
+  button.navbar-toggler.navbar-toggler-right aria-controls="navbarCollapse" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarCollapse" data-toggle="collapse" type="button" 
+    span.navbar-toggler-icon
+  = link_to "Railbooru", root_url, class: "navbar-brand"
+  #navbarCollapse.collapse.navbar-collapse
+    ul.navbar-nav.mr-auto
+      li.nav-item.active
+        = link_to "Посты", posts_url, class: "nav-link"
+      li.nav-item
+        = link_to "Теги", tags_path, class: "nav-link"
+      li.nav-item
+        - if user_signed_in?
+          = link_to "Аккаунт", user_url(current_user), class: 'nav-link'
+nav.navbar.navbar-toggleable-md.navbar-inverse.navbar-inverse style=("background-color: #536379;") 
+  ul.navbar-nav.mr-auto
+    - if user_signed_in?
+      = render second_nav_bar_for(controller_name)
+    - else
+      = render "layouts/guest"
+
+
+    

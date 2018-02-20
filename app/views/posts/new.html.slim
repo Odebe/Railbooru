@@ -1,0 +1,7 @@
+.row
+	.col-lg-2
+	.col-lg-8
+		h1 Новый пост
+		= render 'form', post: @post
+		= link_to 'Back', posts_path
+	.col-lg-2

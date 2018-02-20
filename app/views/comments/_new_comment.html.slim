@@ -1,0 +1,12 @@
+- if user_signed_in?
+  .my-3.p-3.bg-white.rounded.box-shadow
+    h4 Add comment
+    = form_with(model: [@post, @post.comments.build], local: true) do |form|
+      .form-group.row
+        .col-sm-12
+          = form.text_area :body, class: "form-control", id: "new_comment_field"
+      .actions
+        = form.submit class: "btn btn-primary mb-2"
+- else
+  .my-3.p-3.bg-faded.box-shadow
+    = link_to "Войдите, чтобы оставить комментарий.", new_user_session_path, class: "text-muted"

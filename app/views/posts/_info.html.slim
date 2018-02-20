@@ -1,0 +1,13 @@
+.card
+	.card-block
+		p
+			h4.card-title Инфо
+			p
+				| Id:
+				= @post.id
+				br
+		    | Date:
+		    = @post.created_at 
+		    br
+		    | Uploader:
+		    = @post.user.username 

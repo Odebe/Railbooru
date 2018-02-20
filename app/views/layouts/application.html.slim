@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title Railbooru
+    = csrf_meta_tags
+    = favicon_link_tag "logo.ico"
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    link href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet" /
+    meta content="width=device-width, initial-scale=1" name="viewport" /
+  body
+    = render 'layouts/nav_bar'
+    .container-fluid.pt-4
+      - if notice
+        p.alert.alert-success= notice
+      - if alert
+        p.alert.alert-danger= alert
+      = yield
+    footer.footer.bg-light
+      .container
+        span.text-dark

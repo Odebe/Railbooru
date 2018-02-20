@@ -34,6 +34,8 @@ gem 'devise'
 gem 'cancancan', '~> 2.0'
 
 
+gem 'slim-rails'
+
 gem 'kaminari'
 
 

@@ -1,0 +1,24 @@
+= form_with(model: post, local: true) do |form|
+  - if post.errors.any?
+    #error_explanation
+      h2
+        = pluralize(post.errors.count, "error")
+        | prohibited this post from being saved:
+      ul
+        - post.errors.full_messages.each do |message|
+          li= message
+  - if action_name == "edit"
+    span.thumbnail-placeholder
+    .thumbnail-preview
+      = image_tag post.image.thumb.url, class: "img-fluid"
+  - else
+    .form-group.row
+      = form.label :image, class: "col-sm-1 col-form-label", for: :post_path_image
+      .col-sm-11
+        = form.file_field :image, id: :post_path, class: "form-control-file"
+  .form-group.row
+    = form.label :tags, class: "col-sm-1 col-form-label"
+    .col-sm-11
+      = form.text_area :tags_string, value: tag_string_for(post), class: "form-control"
+  .actions
+    = form.submit class: "btn btn-primary mb-2"

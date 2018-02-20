@@ -1,0 +1,10 @@
+.row
+  .col-lg-2.col-md-2.col-sm-12
+    #left_bar
+      = render "layouts/search_form"
+      .hidden-sm-down
+        = render "tags/list"
+  .col-lg-10.col-md-10.col-sm-12
+    .row.mx-auto#posts
+      = render @posts
+    = paginate @posts

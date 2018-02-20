@@ -3,7 +3,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
 
   include CarrierWave::MiniMagick
-  include CarrierWave::ImageOptimizer
+  #include CarrierWave::ImageOptimizer
 
   #process :store_dimensions
 
@@ -12,7 +12,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # storage :fog
 
   process :set_name
-  process optimize: [level: 2]
+  process :set_md5
+  #process :optimize
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -23,6 +24,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   def set_name
     model.name = File.basename file.file
   end
+
+  def set_md5
+    model.md5 = Digest::MD5.hexdigest File.read(file.file)
+  end
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
   #   # For Rails 3.1+ asset pipeline compatibility:
@@ -47,7 +53,6 @@ class ImageUploader < CarrierWave::Uploader::Base
      process resize_to_fit: [800, 600], if: :too_big?  
   end
 
-
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_whitelist
@@ -61,6 +66,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   private
+
+
 
   def store_dimensions
     if file && model

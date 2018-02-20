@@ -3,11 +3,13 @@
 		p
 			h4.card-title Инфо
 			p
-				| Id:
-				= @post.id
+				| Id: #{@post.id}
 				br
-		    | Date:
-		    = @post.created_at 
+				| Name: #{@post.name}
+				br
+				| md5: #{@post.md5}
+				br
+		    | Date: #{@post.created_at} 
 		    br
-		    | Uploader:
-		    = @post.user.username 
+		    | Uploader: 
+		    = link_to @post.user.username, "/posts?user=#{@post.user.username}"

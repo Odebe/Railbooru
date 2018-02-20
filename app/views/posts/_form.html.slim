@@ -7,15 +7,16 @@
       ul
         - post.errors.full_messages.each do |message|
           li= message
-  - if action_name == "edit"
+  - if post.image?
     span.thumbnail-placeholder
     .thumbnail-preview
-      = image_tag post.image.thumb.url, class: "img-fluid"
+      = image_tag post.image.url, class: "img-fluid"
   - else
     .form-group.row
       = form.label :image, class: "col-sm-1 col-form-label", for: :post_path_image
       .col-sm-11
         = form.file_field :image, id: :post_path, class: "form-control-file"
+        = form.hidden_field :image_cache
   .form-group.row
     = form.label :tags, class: "col-sm-1 col-form-label"
     .col-sm-11

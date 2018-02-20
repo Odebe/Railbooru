@@ -50,11 +50,11 @@ class PostsController < ApplicationController
     post_service = PostService.new(current_user, params)
     
     respond_to do |format|
-      if post_service.save
+      if post_service.save?
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new }
+        format.html { redirect_to new_post_url, alert: post_service.errors}
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -66,11 +66,11 @@ class PostsController < ApplicationController
     post_service = PostService.new(current_user, params)
 
     respond_to do |format|
-      if post_service.save
+      if post_service.save?
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
-        format.html { render :edit }
+        format.html { redirect_to :edit, alert: post_service.errors }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end

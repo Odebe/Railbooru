@@ -16,12 +16,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts =
-      if @tags.any?
-        Post.joins(:tags).where(tags: {name: @tags}).group('posts.id').having('count(*) = ?', @tags.count).order(:id).reverse_order.page params[:page] 
-      else
-        Post.order(:id).reverse_order.page params[:page]
-      end
+    @posts = PostQueryBuilder.new.build_query(params)
     @tags = Tag.joins(:posts).where(posts: {id: @posts.ids}).limit(25).group([:id,:name]).order(:name)
   end
 
@@ -54,7 +49,7 @@ class PostsController < ApplicationController
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { redirect_to new_post_url, alert: post_service.errors}
+        format.html { redirect_to new_post_url, alert: post_service.errors }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end

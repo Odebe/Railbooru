@@ -4,7 +4,7 @@ div.card
 		ul
 			-@tags.each do |t|
 				li.tag_li
-					= link_to t.name, posts_url(tag: t.name), class: "tag-link"
+					= link_to t.name, posts_url(tags: t.name), class: "tag-link"
 					span.badge.badge-dark = t.posts_count
 					a href="javascript:;"
 						span.badge.bg-secondary.add_button +

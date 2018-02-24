@@ -1,0 +1,8 @@
+p Синонимы
+- if @aliases.any?
+	- @aliases.each do |tag_alias|
+		p
+			= tag_alias.alias.name
+			|  alias to #{tag_alias.tag.name }
+- else
+	p нет

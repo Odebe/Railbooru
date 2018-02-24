@@ -11,8 +11,9 @@ class Ability
       can :manage, :all
     else
       can [:read, :create], [Post, Tag, Comment]
-      can [:update, :destroy], Post, user_id: user.id
-      can [:destroy, :delete], Comment, user_id: user.id
+      can [:destroy], Post, user_id: user.id
+      can [:update], Post
+      can [:destroy], Comment, user_id: user.id
       can [:read], User, id: user.id
       #can :manage, []
     end

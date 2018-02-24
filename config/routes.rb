@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   	resources :comments
 	end
 
-  resources :tags
-
+  resources :tags 
+  resources :tag_aliases
 
   root "posts#index"
 

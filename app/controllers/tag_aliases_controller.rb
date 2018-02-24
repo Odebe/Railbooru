@@ -15,7 +15,7 @@ class TagAliasesController < ApplicationController
     if tag && tag_alias
       tag.aliases << tag_alias
     end
-    redirect_to tag_alias_path
+    redirect_to :index
   end
 
   def destroy

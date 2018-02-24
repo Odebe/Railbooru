@@ -10,4 +10,5 @@ class Post < ApplicationRecord
 	mount_uploader :image, ImageUploader
   validates_presence_of :image
   validates_processing_of :image
+  validates :image, file_size: {less_than: 5.megabytes}
 end

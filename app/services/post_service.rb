@@ -1,20 +1,28 @@
 class PostService
 
+  def self.destroy(post)
+    tags = post.tags
+    tags.each do |tag|
+      tag.update(posts_count: tag.posts_count-1)
+    end
+    post.destroy
+  end
+
   def initialize(user, params)
     post_params = params.require(:post).permit(:path, :name, :image)
     tags_array = params[:post][:tags_string].split(" ")
 
-    @post =
       if params[:id]
-        Post.find(params[:id])
+        @post = Post.find(params[:id])
       else
-        Post.create(post_params)
+        @post = Post.create(post_params)
+        user.posts << @post
       end
 
     @errors = @post.errors
     @post.errors.clear
 
-    user.posts << @post
+    #user.posts << @post
     update_tags(tags_array)
   end
 

@@ -15,14 +15,6 @@ ActiveRecord::Schema.define(version: 20180224111945) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "aliases", force: :cascade do |t|
-    t.string "name"
-    t.bigint "tag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tag_id"], name: "index_aliases_on_tag_id"
-  end
-
   create_table "comments", force: :cascade do |t|
     t.string "commenter"
     t.text "body"
@@ -87,7 +79,6 @@ ActiveRecord::Schema.define(version: 20180224111945) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "aliases", "tags"
   add_foreign_key "comments", "users"
   add_foreign_key "posts", "users"
 end

@@ -30,7 +30,7 @@ class PostQueryBuilder
         .joins(:tags)
         .where(tags: {name: tags})
         .group('posts.id')
-        .having('count(*) = ?', general_count)
+        .having('count(*) = ?', tags.count-aliases_count)#general_count)
   end
   def add_aliases_to(tags)
     new_tags = Array.new
@@ -73,7 +73,7 @@ class PostQueryBuilder
                          .where(tag_aliases: {alias_id: tag.id}).first
             next unless new_tag
             new_tags << new_tag.name
-            aliases_count += 1
+            #aliases_count += 1
             new_tag.aliases
           end
       aliases.each do |ali|

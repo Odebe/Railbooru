@@ -46,12 +46,3 @@ $(function() {
   });
   
 });
-
-    $.ajax({
-        url:"/post/",
-        type:"GET",
-        data: "id=" + id,
-        success: function(data){
-
-        }
-    });

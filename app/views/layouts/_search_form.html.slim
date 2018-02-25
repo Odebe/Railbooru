@@ -1,5 +1,6 @@
 .form-group.row
   .col-sm-12
     = form_tag(posts_path, method: :get) do
-      = search_field_tag :tags, nil, class: "form-control form-control-sm", id: "searchForm"
+      = search_field_tag :tags, nil, class: "form-control form-control-sm", id: "searchForm", list: "autocomp"
       = submit_tag "Искать", class: "btn btn-primary btn-sm btn-block", id:"search_button"
+      datalist#autocomp

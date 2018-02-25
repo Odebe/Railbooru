@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   get 'tags/index'
 
-
+  get 'posts/autocomplete'
   #get 'gallery/index'#, as: "gallery"
 =begin
   controller :gallery do

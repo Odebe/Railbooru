@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220185414) do
+ActiveRecord::Schema.define(version: 20180225084817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "aliases", force: :cascade do |t|
+    t.string "name"
+    t.bigint "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_aliases_on_tag_id"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.string "commenter"
@@ -36,12 +44,20 @@ ActiveRecord::Schema.define(version: 20180220185414) do
     t.boolean "samp", default: false, null: false
     t.bigint "user_id"
     t.string "md5"
+    t.integer "rating", default: 2
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "posts_tags", id: false, force: :cascade do |t|
     t.bigint "post_id", null: false
     t.bigint "tag_id", null: false
+  end
+
+  create_table "tag_aliases", force: :cascade do |t|
+    t.integer "tag_id"
+    t.integer "alias_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tags", force: :cascade do |t|
@@ -72,6 +88,7 @@ ActiveRecord::Schema.define(version: 20180220185414) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "aliases", "tags"
   add_foreign_key "comments", "users"
   add_foreign_key "posts", "users"
 end

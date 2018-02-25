@@ -44,17 +44,10 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @tags = @post.tags
-
-    #respond_to do |format|
-    #  if params[:id] == "ac"
-    #    @autocopm = Tag.where("name line :q", q: "#{params[:tags].split(" ").last}%").limit(10)
-    #    format.js {render "autocomplete"}
-    #  else
-    #    @post = Post.find(params[:id])
-    #    format.html
-    #    format.js {render "show_image"}
-    #  end
-    #end
+    respond_to do |format|
+      format.html
+      format.js {render "show_image"}
+    end
   end
 
   # GET /posts/new

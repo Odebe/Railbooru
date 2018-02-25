@@ -35,50 +35,39 @@ function send_ajax(xhr,search){
 		xhr.open('GET', 'posts/autocomplete?tags='+last, false);
 		xhr.send();
 		if (xhr.status != 200) {
-  	// обработать ошибку
-  	//alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
   		return nil;
 		} else {
-		  // вывести результат
-		  //alert( xhr.responseText ); // responseText -- текст ответа.
 		 	return xhr.responseText;
 		}
 }
-function show_list(search, res){
-
-}
-
-function hide_list(){}
-
 function add_to_list(res){
 	var data_list = document.getElementsByTagName("datalist")[0];
-	//.getElementById("autocomp");
-	//alert(typeof res);
 	data_list.innerText = '';
 	var options = '';
 	for(var i = 0; i< res.length; i++){
-		//var op = Array.prototype.join.call()
 		console.log(res[i]);
 		options += '<option value="'+res[i].join(" ")+'" />';
 	}
 	data_list.innerHTML = options;
 }
 
-
 function dropDownMagick(){
 	var xhr = new XMLHttpRequest();
 	var search = document.getElementById('searchForm');
 	var res;
-	search.onchange = function(){
+	search.oninput = function(){
 		res = JSON.parse(send_ajax(xhr, search));
-		add_to_list(res);
+		var data_list = document.getElementsByTagName("datalist")[0];
+		add_to_list(res,data_list);
 	}
-	search.onfocus = function(){
-		//show_list(search, res);
-	}
-	search.onblur = function(){
-		//hide_list();
-	}
+}
+function addTag(tag){
+	var search = document.getElementById('searchForm');
+	search.value = [search.value, tag].join(" ");
+}
+function reply(comment_id) {
+	var comment_field = document.getElementById('new_comment_field');
+	comment_field.value += '>>' + comment_id + '\n';
 }
 
 //*/
@@ -113,12 +102,3 @@ function addReplyMagick(){
 	});
 }
 */
-function addTag(tag){
-	var search = document.getElementById('searchForm');
-	search.value = [search.value, tag].join(" ");
-}
-
-function reply(comment_id) {
-	var comment_field = document.getElementById('new_comment_field');
-	comment_field.value += '>>' + comment_id + '\n';
-}

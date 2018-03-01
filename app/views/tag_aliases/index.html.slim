@@ -1,8 +1,15 @@
-p Синонимы
-- if @aliases.any?
-	- @aliases.each do |tag_alias|
-		p
-			= tag_alias.alias.name
-			|  alias to #{tag_alias.tag.name }
-- else
-	p нет
+.container-fluid
+  .row
+    table.table
+      thead.thead-light
+        tr
+          th scope="col"  Tag
+          th scope="col" aliases to
+          th scope="col" tag
+          th
+      tbody
+        - @aliases.each do |tag_alias|
+          tr
+            td= tag_alias.alias.name
+            td 
+            td= tag_alias.tag.name

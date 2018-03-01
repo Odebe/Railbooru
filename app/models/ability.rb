@@ -15,6 +15,8 @@ class Ability
       can [:update], Post
       can [:destroy], Comment, user_id: user.id
       can [:read], User, id: user.id
+      can [:read, :create], Pool
+      can [:update], Pool, user_id: user.id
       #can :manage, []
     end
 

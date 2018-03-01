@@ -1,0 +1,5 @@
+h4 | Name: #{@pool.name} | Creator: #{@pool.user.username}
+.row.mx-auto#posts
+	= render @posts
+	= paginate @posts
+

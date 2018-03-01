@@ -15,8 +15,10 @@ Rails.application.routes.draw do
   	resources :comments
 	end
 
+
   resources :tags 
   resources :tag_aliases
+  resources :pools
 
   root "posts#index"
 

@@ -9,7 +9,7 @@ class PostService
   end
 
   def initialize(user, params)
-    post_params = params.require(:post).permit(:path, :name, :image)
+    post_params = params.require(:post).permit(:path, :name, :image, :rating)
     tags_array = params[:post][:tags_string].split(" ")
 
       if params[:id]
@@ -21,7 +21,7 @@ class PostService
 
     @errors = @post.errors
     @post.errors.clear
-
+    @post.update(rating: post_params[:rating])
     #user.posts << @post
     update_tags(tags_array)
   end

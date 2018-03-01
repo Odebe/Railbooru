@@ -10,13 +10,19 @@
   - if post.image?
     span.thumbnail-placeholder
     .thumbnail-preview
-      = image_tag post.image.url, class: "img-fluid"
+      center
+        = image_tag post.image.thumb, class: "img-fluid"
   - else
     .form-group.row
       = form.label :image, class: "col-sm-1 col-form-label", for: :post_path_image
       .col-sm-11
         = form.file_field :image, id: :post_path, class: "form-control-file"
         = form.hidden_field :image_cache
+  .form-group.row
+    - Post.ratings.keys.each do |rating|
+      .col-md-3.col-sm-12
+        = form.radio_button :rating, rating
+        = form.label rating.to_sym
   .form-group.row
     = form.label :tags, class: "col-sm-1 col-form-label"
     .col-sm-11

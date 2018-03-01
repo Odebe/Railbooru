@@ -11,5 +11,7 @@
 				br
 		    | Date: #{@post.created_at} 
 		    br
+		    | Rating: #{@post.rating} 
+		    br
 		    | Uploader: 
 		    = link_to @post.user.username, "/posts?user=#{@post.user.username}"

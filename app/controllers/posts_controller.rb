@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   load_and_authorize_resource 
+  protect_from_forgery except: :autocomplete
 
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   #before_action :get_tag_array, only: [:create, :update]
@@ -18,13 +19,35 @@ class PostsController < ApplicationController
   def index
     @posts = PostQueryBuilder.new.build_query(params)
     @tags = Tag.joins(:posts).where(posts: {id: @posts.ids}).limit(25).group([:id,:name]).order(:name)
+    #respond_to :html, :js
+  end
+
+
+  def autocomplete
+    #@tags = params[:tags].split(" ")
+    #return unless request.xhr?
+    tags = params[:tags].split(",")
+    return render "" unless tags.any?
+    autocopm = Tag.select(:name)
+      .where("lower(name) like ?", "#{tags.last.downcase}%")
+      .map(&:name)#.join(" ")
+    autocopm.map! do |a|
+      a = tags[0...-1] + [a]
+    end
+    render json: autocopm
+    #respond_to do |format|
+    #  format.json {render json: autocopm}
+    #end
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
     @tags = @post.tags
-    respond_to :html, :js
+    respond_to do |format|
+      format.html
+      format.js {render "show_image"}
+    end
   end
 
   # GET /posts/new
@@ -81,6 +104,7 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   private
 

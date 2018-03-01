@@ -1,0 +1,8 @@
+= link_to "Добавить пул", new_pool_path, class: "nav-link"
+- if action_name == "show"
+  - if can? :update, @pool
+    li.nav-item
+      = link_to "Изменить", edit_pool_path(@pool), class: "nav-link"
+  - if can? :destroy, @pool
+    li.nav-item
+      = link_to "Удалить", pool_path(@pool), class: "nav-link", method: :delete

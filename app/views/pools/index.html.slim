@@ -1,0 +1,15 @@
+h1 Pools
+.container-fluid
+  .row
+    table.table
+      thead.thead-light
+        tr
+          th scope="col"  Name
+          th scope="col" Count
+          th
+      tbody
+        - @pools.each do |pool|
+          tr
+            td= link_to pool.name, pool_url(pool)
+            td= pool.posts.count
+            td

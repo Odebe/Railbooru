@@ -9,6 +9,8 @@ nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse
       li.nav-item
         = link_to "Теги", tags_path, class: "nav-link"
       li.nav-item
+        = link_to "Пулы", pools_path, class: "nav-link"
+      li.nav-item
         - if user_signed_in?
           = link_to "Аккаунт", user_url(current_user), class: 'nav-link'
 nav.navbar.navbar-toggleable-md.navbar-inverse.navbar-inverse style=("background-color: #536379;") 

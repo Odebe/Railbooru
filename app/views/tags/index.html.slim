@@ -15,8 +15,9 @@
           tr
             td= tag.id
             td= tag.posts_count
-            td= link_to tag.name, tag_url(tag)
+            td= link_to tag.name, posts_url(tags: tag.name)
             td= link_to "change", edit_tag_path(tag)
             td= link_to "delete", tag, method: :delete
             td
             td
+    = paginate @tags

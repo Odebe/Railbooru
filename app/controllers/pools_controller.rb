@@ -2,7 +2,7 @@ class PoolsController < ApplicationController
   before_action :set_pool, only: [:show, :edit, :update, :destroy]
 
   def index
-    @pools = Pool.all.page params[:page]
+    @pools = Pool.page(params[:page]).per(12)
   end
 
   def show

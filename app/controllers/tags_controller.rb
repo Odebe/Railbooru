@@ -6,7 +6,7 @@ class TagsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_tag
 
   def index
-    @tags = Tag.all.reverse
+    @tags = Tag.all.order(:id).reverse_order.page(params[:page]).per(12)
   end
 
   def show

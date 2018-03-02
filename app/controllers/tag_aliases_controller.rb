@@ -2,7 +2,7 @@ class TagAliasesController < ApplicationController
   #before_action :tag_alias_params
 
   def index
-    @aliases = TagAlias.all
+    @aliases = TagAlias.page(params[:page]).per(12)
   end
 
   def new

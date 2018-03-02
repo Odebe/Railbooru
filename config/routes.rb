@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users, only: [:show, :index]
   
-  get 'tags/index'
+  #get 'tags/index'
 
   get 'posts/autocomplete'
   #get 'gallery/index'#, as: "gallery"

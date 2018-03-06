@@ -66,7 +66,8 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     post_service = PostService.new(current_user, params)
-    
+    post_service.create_post
+    #post_service.create
     respond_to do |format|
       if post_service.save?
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
@@ -82,6 +83,7 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1.json
   def update
     post_service = PostService.new(current_user, params)
+    post_service.update_post
 
     respond_to do |format|
       if post_service.save?
@@ -97,8 +99,9 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-    PostService.destroy(@post)
-    #@post.destroy
+    post_service = PostService.new(current_user, params)
+    post_service.destroy_post
+
     respond_to do |format|
       format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }

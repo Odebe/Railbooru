@@ -1,33 +1,63 @@
 class PostService
 
-  def self.destroy(post)
-    tags = post.tags
-    tags.each do |tag|
-      tag.update(posts_count: tag.posts_count-1)
-    end
-    post.destroy
-  end
-
   def initialize(user, params)
-    post_params = params.require(:post).permit(:path, :name, :image, :rating)
-    tags_array = params[:post][:tags_string].split(" ")
-
+    puts params
+    @params = params
+    if params[:post]
+      @post_params = params.require(:post).permit(:path, :name, :image, :rating)
+      @tags_array = params.require(:post)[:tags_string].split(" ")
+    end
+    @user = user
+=begin
       if params[:id]
         @post = Post.find(params[:id])
       else
         @post = Post.create(post_params)
-        user.posts << @post
+        @user.posts << @post
       end
-
-    @errors = @post.errors
-    @post.errors.clear
-    @post.update(rating: post_params[:rating])
+=end
+    #@errors = @post.errors
+    #@post.errors.clear
+    #@post.update(rating: post_params[:rating])
     #user.posts << @post
-    update_tags(tags_array)
+    #update_tags(tags_array)
   end
 
+  def destroy_post
+    #tags = post.tags
+    #tags.each do |tag|
+    #  tag.update(posts_count: tag.posts_count-1)
+    #end
+    #post.destroy
+  end
+
+  def create_post
+    #@post = Post.create(@post_params)
+    post = @user.posts.create(@post_params)
+    #@user.posts << @post
+    set_errors_for(post)
+    update_tags(@tags_array)
+  end
+
+  def update_post
+    #return nil unless @post_params[:id]
+    @post = Post.find(@params[:id])
+    @post.update(@post_params)
+    #puts @post_params
+    #@post.update(@post)
+    set_errors_for(@post)
+    update_tags(@tags_array)
+    #@tags_array
+  end
+
+  def set_errors_for(post)
+    @errors = post.errors
+    #post.errors.clear
+  end
+
+
   def save?
-    !@errors.full_messages.any?
+    true
   end
 
   def errors
@@ -39,6 +69,7 @@ class PostService
   end
 
   private
+
 
   def update_tags(tags_array)
     create_new_tags(tags_array)

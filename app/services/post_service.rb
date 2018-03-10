@@ -6,8 +6,11 @@ class PostService
     if params[:post]
       @post_params = params.require(:post).permit(:path, :name, :image, :rating)
       @tags_array = params.require(:post)[:tags_string].split(" ")
+      @tags_string = params.require(:post)[:tags_string]
     end
     @user = user
+
+    @tag_service = TagService.new
 =begin
       if params[:id]
         @post = Post.find(params[:id])
@@ -24,7 +27,11 @@ class PostService
   end
 
   def destroy_post
-    #tags = post.tags
+    post = Post.find(@params[:id])
+    tags = post.tags
+    @tag_service.decrease_tag_counts_of(post)
+    post.destroy
+    #decrease_counts_for(tags)
     #tags.each do |tag|
     #  tag.update(posts_count: tag.posts_count-1)
     #end
@@ -33,20 +40,22 @@ class PostService
 
   def create_post
     #@post = Post.create(@post_params)
-    post = @user.posts.create(@post_params)
+    post = @user.posts.build(@post_params)
     #@user.posts << @post
     set_errors_for(post)
-    update_tags(@tags_array)
+    if post.valid?
+      post.save
+      @tag_service.update_tags(@tags_array, post)
+    end
   end
 
   def update_post
     #return nil unless @post_params[:id]
-    @post = Post.find(@params[:id])
-    @post.update(@post_params)
-    #puts @post_params
-    #@post.update(@post)
-    set_errors_for(@post)
-    update_tags(@tags_array)
+    post = Post.find(@params[:id])
+    post.update(@post_params)
+    set_errors_for(post)
+    @tag_service.update_tags(@tags_array, post)
+    #update_tags(@tags_array)
     #@tags_array
   end
 

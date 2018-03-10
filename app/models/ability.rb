@@ -17,6 +17,7 @@ class Ability
       can [:read], User, id: user.id
       can [:read, :create], Pool
       can [:update], Pool, user_id: user.id
+      can [:read], TagAlias
       #can :manage, []
     end
 

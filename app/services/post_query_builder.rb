@@ -24,20 +24,28 @@ class PostQueryBuilder
   def filter_by_tags(scope, tags_string = nil)
     tags = get_tags(tags_string)
     return scope unless tags
-    tags, aliases_count = add_aliases_to(tags)
-    general_count = 
-              if tags.count == aliases_count
-                1
-              else
-                tags.count-aliases_count
-              end
+    tag_service = TagService.new
+    aliases = tag_service.get_aliases_for(tags)
+    aliases.each do |a|
+      tags << a.name
+    end
+    #tags, aliases_count = add_aliases_to(tags)
+    #general_count = 
+    #          if tags.count == aliases_count
+    #            1
+    #          else
+    #            tags.count-aliases_count
+    #          end
+    
     scope
         .joins(:tags)
         .where(tags: {name: tags})
         .group('posts.id')
-        .having('count(*) = ?', tags.count-aliases_count)#general_count)
+        .having('count(*) = ?', tags.count-aliases.count)#general_count)
+        #.having('count(*) = ?', tags.count-aliases_count)#general_count)
   end
-  
+
+=begin
   def add_aliases_to(tags)
     new_tags = Array.new
     aliases_count = 0
@@ -63,6 +71,7 @@ class PostQueryBuilder
     end
     return new_tags, aliases_count
   end
+=end
 
   def get_alias(tag)
     #tag = Tag.find_by(name: tag_name)

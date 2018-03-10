@@ -19,7 +19,9 @@ class TagAliasesController < ApplicationController
   end
 
   def destroy
-
+    al = TagAlias.find(params[:id])
+    al.destroy
+    redirect_to tag_aliases_path
   end
 
   private

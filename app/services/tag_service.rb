@@ -14,38 +14,32 @@ class TagService
     tag_string.split(" ") 
   end
 
-  def get_array_with_aliases_for(tags)
-    new_tags = Array.new
-
+  def get_aliases_for(tags)
+    aliases = []
     tags.each do |tag_name|
       tag = Tag.find_by(name: tag_name)
       next unless tag
-      
-    end
-
-
-    aliases_count = 0
-    tags.each do |tag_name|
-      new_tags << tag_name
-      tag = Tag.find_by(name: tag_name)
-      next unless tag
-      aliases =
-          if tag.aliases.any?
-            tag.aliases
-          else
-            new_tag = Tag.joins(:tag_aliases)
-                         .where(tag_aliases: {alias_id: tag.id}).first
-            next unless new_tag
-            new_tags << new_tag.name
-            #aliases_count += 1
-            new_tag.aliases
-          end
-      aliases.each do |ali|
-        new_tags << ali.name unless new_tags.include? ali.name
-        aliases_count += 1
+      puts tag.name
+      puts "#{tag.aliases}"
+      puts tag.inverse_aliases
+      aliases << tag.aliases
+      #aliases << tag.inverse_aliases
+      next unless tag.inverse_aliases.any?
+      aliases << tag.inverse_aliases
+      tag.inverse_aliases.each do |inv|
+        aliases << inv.aliases
       end
+=begin
+              if tag.aliases.count > 1
+                tag.aliases
+              else
+                #inv = tag.inverse_aliases
+                #inv << get_aliases_for(inv.map(&:name))
+                tag.inverse_aliases
+              end
+=end
     end
-    return new_tags, aliases_count
+    aliases.uniq.flatten!
   end
 
   def decrease_tag_counts_of(post)

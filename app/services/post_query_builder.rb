@@ -29,22 +29,12 @@ class PostQueryBuilder
     aliases.each do |a|
       tags << a.name
     end
-    #tags, aliases_count = add_aliases_to(tags)
-    #general_count = 
-    #          if tags.count == aliases_count
-    #            1
-    #          else
-    #            tags.count-aliases_count
-    #          end
-    
     scope
         .joins(:tags)
         .where(tags: {name: tags})
         .group('posts.id')
-        .having('count(*) = ?', tags.count-aliases.count)#general_count)
-        #.having('count(*) = ?', tags.count-aliases_count)#general_count)
+        .having('count(*) = ?', tags.count-aliases.count)
   end
-
 =begin
   def add_aliases_to(tags)
     new_tags = Array.new
@@ -72,9 +62,7 @@ class PostQueryBuilder
     return new_tags, aliases_count
   end
 =end
-
   def get_alias(tag)
-    #tag = Tag.find_by(name: tag_name)
     return unless tag
     tag_alias = TagAlias.find_by(alias_id: tag.id)# if tag
     return unless tag_alias

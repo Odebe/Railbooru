@@ -18,7 +18,8 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = PostQueryBuilder.new.build_query(params)
-    @tags = Tag.joins(:posts).where(posts: {id: @posts.ids}).limit(25).group([:id,:name]).order(:name)
+    @tags = Tag.joins(:posts).where(posts: {id: @posts.ids}).limit(30).group([:id,:name]).order(:name)
+    
     #respond_to :html, :js
   end
 

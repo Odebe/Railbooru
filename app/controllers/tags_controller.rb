@@ -18,11 +18,11 @@ class TagsController < ApplicationController
   end
 
   def create
-    @tag = Tag.new(tag_params)
+    @tag = Tag.new(name: params[:tag][:name].downcase)
 
     respond_to do |format|
       if @tag.save
-        format.html {redirect_to tags_index_url}
+        format.html {redirect_to tags_url}
       else
         format.html {redirect_to tags_index_url notide: "wrong argiments"}
       end
@@ -32,7 +32,7 @@ class TagsController < ApplicationController
   def destroy
     @tag.destroy
     respond_to do |format|
-      format.html {redirect_to tags_index_url}
+      format.html {redirect_to tags_url}
     end
   end
 

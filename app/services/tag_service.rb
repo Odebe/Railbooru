@@ -19,27 +19,14 @@ class TagService
     tags.each do |tag_name|
       tag = Tag.find_by(name: tag_name)
       next unless tag
-      puts tag.name
-      puts "#{tag.aliases}"
-      puts tag.inverse_aliases
       aliases << tag.aliases
-      #aliases << tag.inverse_aliases
       next unless tag.inverse_aliases.any?
       aliases << tag.inverse_aliases
       tag.inverse_aliases.each do |inv|
         aliases << inv.aliases
       end
-=begin
-              if tag.aliases.count > 1
-                tag.aliases
-              else
-                #inv = tag.inverse_aliases
-                #inv << get_aliases_for(inv.map(&:name))
-                tag.inverse_aliases
-              end
-=end
     end
-    aliases.uniq.flatten!
+    aliases.flatten#.uniq
   end
 
   def decrease_tag_counts_of(post)

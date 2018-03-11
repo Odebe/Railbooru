@@ -1,14 +1,5 @@
-= form_with(model: tag, local: true) do |form|
-  - if tag.errors.any?
-    #error_explanation
-      h2
-        = pluralize(tag.errors.count, "error")
-        | prohibited this tag from being saved:
-      ul
-        - tag.errors.full_messages.each do |message|
-          li= message
-  .field
-    = form.label :name
-    = form.text_field :name, id: :post_path
-  .actions
-    = form.submit
+= simple_form_for tag do |f|
+  = f.label "Теги"
+  = f.text_area :name, class: "form-control"
+  = f.hint 'Разделяйте теги пробелом.'
+  = f.button :submit

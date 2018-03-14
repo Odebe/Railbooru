@@ -1,7 +1,8 @@
 class TagService
 
   def initialize#(tag_string)
-    #@tags_names_array = tag_string.split(" ") 
+    #@tags_names_array = tag_string.split(" ")
+    @errors = []
   end
 
   def update_tags(tags_array, post)
@@ -10,7 +11,7 @@ class TagService
     remove_tags_from_post(tags_array, post)
   end
 
-  def tag_names_array(tags)
+  def tag_names_array(tag_string)
     tag_string.split(" ") 
   end
 
@@ -37,8 +38,9 @@ class TagService
 
   def create_new_tags(tags)
     tags = tag_names_array(tags) if tags.kind_of? String
-    tags.each do |tag|
-      Tag.find_or_create_by(name: tag)
+    tags.each do |tag_name|
+      tag = Tag.find_or_create_by(name: tag_name.downcase)
+      @errors << tag.errors
     end
   end
 
@@ -60,4 +62,10 @@ class TagService
       tag.update(posts_count: tag.posts_count-1)
     end
   end
+
+  def save?
+    !@errors.any?
+  end
+
+  def set_errors; end
 end

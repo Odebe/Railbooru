@@ -9,21 +9,7 @@ class PostService
       @tags_string = params.require(:post)[:tags_string]
     end
     @user = user
-
     @tag_service = TagService.new
-=begin
-      if params[:id]
-        @post = Post.find(params[:id])
-      else
-        @post = Post.create(post_params)
-        @user.posts << @post
-      end
-=end
-    #@errors = @post.errors
-    #@post.errors.clear
-    #@post.update(rating: post_params[:rating])
-    #user.posts << @post
-    #update_tags(tags_array)
   end
 
   def destroy_post
@@ -31,17 +17,10 @@ class PostService
     tags = post.tags
     @tag_service.decrease_tag_counts_of(post)
     post.destroy
-    #decrease_counts_for(tags)
-    #tags.each do |tag|
-    #  tag.update(posts_count: tag.posts_count-1)
-    #end
-    #post.destroy
   end
 
   def create_post
-    #@post = Post.create(@post_params)
     post = @user.posts.build(@post_params)
-    #@user.posts << @post
     set_errors_for(post)
     if post.valid?
       post.save
@@ -61,12 +40,11 @@ class PostService
 
   def set_errors_for(post)
     @errors = post.errors
-    #post.errors.clear
   end
 
 
   def save?
-    true
+    !@errors.any?
   end
 
   def errors

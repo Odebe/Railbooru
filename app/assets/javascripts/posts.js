@@ -40,7 +40,7 @@ function send_ajax(xhr,search){
 		 	return xhr.responseText;
 		}
 }
-function add_to_list(res){
+function add_to_list(res, search){
 	var data_list = document.getElementsByTagName("datalist")[0];
 	data_list.innerText = '';
 	var options = '';
@@ -57,8 +57,8 @@ function dropDownMagick(){
 	var res;
 	search.oninput = function(){
 		res = JSON.parse(send_ajax(xhr, search));
-		var data_list = document.getElementsByTagName("datalist")[0];
-		add_to_list(res,data_list);
+		//var data_list = document.getElementsByTagName("datalist")[0];
+		add_to_list(res, search);
 	}
 }
 function addTag(tag){

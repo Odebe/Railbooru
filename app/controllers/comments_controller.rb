@@ -18,7 +18,6 @@ class CommentsController < ApplicationController
 
 	def destroy
     #authorize! :destroy, @comment, message: "Unable to destroy this comment."
-
 		@comment.delete
 		redirect_to post_url(@post)
 	end

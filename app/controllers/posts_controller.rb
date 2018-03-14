@@ -26,7 +26,6 @@ class PostsController < ApplicationController
 
   def autocomplete
     #@tags = params[:tags].split(" ")
-    #return unless request.xhr?
     tags = params[:tags].split(",")
     return render "" unless tags.any?
     autocopm = Tag.select(:name)
@@ -36,9 +35,6 @@ class PostsController < ApplicationController
       a = tags[0...-1] + [a]
     end
     render json: autocopm
-    #respond_to do |format|
-    #  format.json {render json: autocopm}
-    #end
   end
 
   # GET /posts/1

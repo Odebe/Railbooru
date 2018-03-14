@@ -15,4 +15,8 @@ class Post < ApplicationRecord
   validates_presence_of :image
   validates_processing_of :image
   validates :image, file_size: {less_than: 5.megabytes}
+
+  def tags_string
+    self.tags.map(&:name).join(" ")
+  end
 end

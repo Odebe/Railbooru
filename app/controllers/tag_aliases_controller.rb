@@ -10,12 +10,12 @@ class TagAliasesController < ApplicationController
   end
 
   def create
-    tag_alias = Tag.find_by(name: tag_alias_params[:from])
-    tag = Tag.find_by(name: tag_alias_params[:to])
+    tag_alias = Tag.find_by(name: tag_alias_params[:alias])
+    tag = Tag.find_by(name: tag_alias_params[:tag])
     if tag && tag_alias
       tag.aliases << tag_alias
     end
-    redirect_to :index
+    redirect_to tag_aliases_path
   end
 
   def destroy
@@ -27,7 +27,7 @@ class TagAliasesController < ApplicationController
   private
 
   def tag_alias_params
-    params.require(:tag_alias).permit(:from, :to)
+    params.require(:tag_alias).permit(:alias, :tag)
   end
 
 end

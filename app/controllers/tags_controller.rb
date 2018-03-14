@@ -10,7 +10,7 @@ class TagsController < ApplicationController
   end
 
   def show
-    @posts = @tag.posts.all
+    redirect_to posts_url(tags: @tag.name)
   end
 
   def new
@@ -18,15 +18,17 @@ class TagsController < ApplicationController
   end
 
   def create
-    @tag = Tag.new(name: params[:tag][:name].downcase)
-
-    respond_to do |format|
-      if @tag.save
-        format.html {redirect_to tags_url}
-      else
-        format.html {redirect_to tags_index_url notide: "wrong argiments"}
-      end
-    end
+    #@tag = Tag.new(name: params[:tag][:name].downcase)
+    tag_service = TagService.new
+    tag_service.create_new_tags(params[:tag][:name])
+    redirect_to tags_url
+    #respond_to do |format|
+    #  if tag_service.save? #@tag.save
+    #    format.html {redirect_to tags_url}
+    #  else
+    #    format.html {redirect_to tags_url notide: "wrong argiments"}
+    #  end
+    #end
   end
 
   def destroy

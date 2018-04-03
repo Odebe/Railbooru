@@ -1,5 +1,5 @@
 class ModerateTasksController < ApplicationController
-  before_action :set_moderate_task, only: [:show, :edit, :update, :destroy]
+  #before_action :set_moderate_task, only: [:show, :edit, :update, :destroy]
 
   # GET /moderate_tasks
   # GET /moderate_tasks.json
@@ -24,31 +24,42 @@ class ModerateTasksController < ApplicationController
   # POST /moderate_tasks
   # POST /moderate_tasks.json
   def create
-    @moderate_task = ModerateTask.new(moderate_task_params)
-
-    respond_to do |format|
-      if @moderate_task.save
-        format.html { redirect_to @moderate_task, notice: 'Moderate task was successfully created.' }
-        format.json { render :show, status: :created, location: @moderate_task }
-      else
-        format.html { render :new }
-        format.json { render json: @moderate_task.errors, status: :unprocessable_entity }
-      end
+    puts params
+    if params[:tasks].any?
+      #ModTaskService.close(params[:tasks],current_user)
+    else
+      #ModTaskService.close(params[:id],current_user)
+      #@moderate_task = ModerateTask.find(params[:id])
     end
+    #@moderate_task = ModerateTask.new(moderate_task_params)
+
+    #respond_to do |format|
+    #  if @moderate_task.save
+    #    format.html { redirect_to @moderate_task, notice: 'Moderate task was successfully created.' }
+    #    format.json { render :show, status: :created, location: @moderate_task }
+    #  else
+    #    format.html { render :new }
+    #    format.json { render json: @moderate_task.errors, status: :unprocessable_entity }
+    #  end
+    #end
+
   end
 
   # PATCH/PUT /moderate_tasks/1
   # PATCH/PUT /moderate_tasks/1.json
   def update
-    respond_to do |format|
-      if @moderate_task.update(moderate_task_params)
-        format.html { redirect_to @moderate_task, notice: 'Moderate task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @moderate_task }
-      else
-        format.html { render :edit }
-        format.json { render json: @moderate_task.errors, status: :unprocessable_entity }
-      end
-    end
+    ModTaskService.close(params[:tasks],current_user)
+    #ModTaskService.close(params[:tasks],current_user)
+    #respond_to do |format|
+    #  if @moderate_task.update(moderate_task_params)
+    #    format.html { redirect_to @moderate_task, notice: 'Moderate task was successfully updated.' }
+    #    format.json { render :show, status: :ok, location: @moderate_task }
+    #  else
+    #    format.html { render :edit }
+    #    format.json { render json: @moderate_task.errors, status: :unprocessable_entity }
+    #  end
+    #end
+    redirect_to moderate_tasks_url, notice: ':ok'
   end
 
   # DELETE /moderate_tasks/1

@@ -18,6 +18,7 @@ class Ability
       can [:read, :create], Pool
       can [:update], Pool, user_id: user.id
       can [:read], TagAlias
+      cannot [:manage], ModerateTask
       #can :manage, []
     end
 

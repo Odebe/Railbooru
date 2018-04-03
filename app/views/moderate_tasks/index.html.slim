@@ -1,26 +1,29 @@
 h1 Список тасков на модерацию
-.row
-  .col-md-12
-    = button_tag "Принять",class: "btn btn-default btn-block"
-br
-- @moderate_tasks.each do |moderate_task|
+= form_tag "/moderate_tasks/1", method: :put do
   .row
     .col-md-12
-      .card
-        .card-body
-          .row
-            .col-md-1
-              = check_box_tag 'accept'
-            .col-md-2
-              | Тип: #{moderate_task.task_type}
-            .col-md-2
-              | Модель: #{moderate_task.model_type}
-            .col-md-2
-              | ИД модели: #{moderate_task.model_id}
-            .col-md-2
-              | Польз.: #{moderate_task.creator.username}
-            .col-md-2
-              | Дата: #{moderate_task.created_at.strftime("%H:%M %d/%m/%Y")}
-            .col-md-1
-              = link_to "Cсылка", post_url(id: moderate_task.model_id) 
+      = submit_tag "Принять", class: "btn btn-default btn-block"
+  br
+  - @moderate_tasks.each do |moderate_task|
+    .row
+      .col-md-12
+        .card
+          .card-body
+            .row
+              .col-md-1
+                = check_box_tag 'tasks[]', moderate_task.id
+              .col-md-1
+                | #{moderate_task.status}
+              .col-md-2
+                | Тип: #{moderate_task.task_type}
+                br
+                | Модель: #{moderate_task.model_type}
+              .col-md-2
+                | ИД модели: #{moderate_task.model_id}
+              .col-md-2
+                | Польз.: #{moderate_task.creator.username}
+              .col-md-2
+                | Дата: #{moderate_task.created_at.strftime("%H:%M %d/%m/%Y")}
+              .col-md-1
+                = link_to "Cсылка", post_url(id: moderate_task.model_id) 
 = paginate @moderate_tasks

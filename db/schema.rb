@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403150202) do
+ActiveRecord::Schema.define(version: 20180403180229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20180403150202) do
     t.bigint "passer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0
     t.index ["creator_id"], name: "index_moderate_tasks_on_creator_id"
     t.index ["passer_id"], name: "index_moderate_tasks_on_passer_id"
   end

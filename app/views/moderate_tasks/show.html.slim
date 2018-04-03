@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Task Type:
+  = @moderate_task.task_type
+p
+  strong Model type:
+  = @moderate_task.model_type
+p
+  strong Model:
+  = @moderate_task.model_id
+p
+  strong Creator:
+  = @moderate_task.creator
+p
+  strong Passer:
+  = @moderate_task.passer
+
+=> link_to 'Edit', edit_moderate_task_path(@moderate_task)
+'|
+=< link_to 'Back', moderate_tasks_path

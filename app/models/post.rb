@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   enum rating: [:safe, :nsfw, :questionable]
+  enum status: [:pending, :published]
 
 	has_and_belongs_to_many :tags, counter_cache: true
   has_and_belongs_to_many :pools

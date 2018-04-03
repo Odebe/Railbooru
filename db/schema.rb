@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20180301121143) do
+ActiveRecord::Schema.define(version: 20180403150202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +32,18 @@ ActiveRecord::Schema.define(version: 20180301121143) do
     t.bigint "user_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "moderate_tasks", force: :cascade do |t|
+    t.integer "task_type"
+    t.integer "model_type"
+    t.integer "model_id"
+    t.bigint "creator_id"
+    t.bigint "passer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_moderate_tasks_on_creator_id"
+    t.index ["passer_id"], name: "index_moderate_tasks_on_passer_id"
   end
 
   create_table "pools", force: :cascade do |t|
@@ -60,6 +71,7 @@ ActiveRecord::Schema.define(version: 20180301121143) do
     t.bigint "user_id"
     t.string "md5"
     t.integer "rating", default: 2
+    t.integer "status", default: 0
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -105,6 +117,8 @@ ActiveRecord::Schema.define(version: 20180301121143) do
 
   add_foreign_key "aliases", "tags"
   add_foreign_key "comments", "users"
+  add_foreign_key "moderate_tasks", "users", column: "creator_id"
+  add_foreign_key "moderate_tasks", "users", column: "passer_id"
   add_foreign_key "pools", "users"
   add_foreign_key "posts", "users"
 end

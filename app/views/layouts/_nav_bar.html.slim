@@ -12,9 +12,13 @@ nav.navbar.navbar-toggleable-md.navbar-inverse.bg-inverse
         = link_to "Синонимы", tag_aliases_path, class: "nav-link"
       li.nav-item
         = link_to "Пулы", pools_path, class: "nav-link"
-      li.nav-item
-        - if user_signed_in?
+      - if user_signed_in?
+        li.nav-item
           = link_to "Аккаунт", user_url(current_user), class: 'nav-link'
+        - if current_user.admin_role?
+          li.nav-item
+            = link_to "Панель администратора", moderate_tasks_url, class: 'nav-link'          
+
 nav.navbar.navbar-toggleable-md.navbar-inverse.navbar-inverse style=("background-color: #536379;") 
   ul.navbar-nav.mr-auto
     - if user_signed_in?

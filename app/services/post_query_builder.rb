@@ -7,10 +7,15 @@ class PostQueryBuilder
     scope = filter_by_page(scope, params[:page])
     scope = filter_by_user(scope, params[:user])
     scope = filter_by_rating(scope, params[:rating])
+    scope = filter_by_status(scope, params[:status])
     scope.order(:id).reverse_order
   end
   def filter_by_page(scope, page = 0)
     scope = scope.page page
+  end
+  def filter_by_status(scope, status = :published)
+    return scope if status == :published
+    scope = scope.where(status: [:published, status])
   end
   def filter_by_user(scope, user = nil)
     return scope unless user

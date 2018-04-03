@@ -1,4 +1,5 @@
 class PostService
+  attr_accessor :post
 
   def initialize(user, params)
     puts params
@@ -20,10 +21,10 @@ class PostService
   end
 
   def create_post
-    post = @user.posts.build(@post_params)
+    @post = @user.posts.build(@post_params)
     set_errors_for(post)
-    if post.valid?
-      post.save
+    if @post.valid?
+      @post.save
       @tag_service.update_tags(@tags_array, post)
     end
   end

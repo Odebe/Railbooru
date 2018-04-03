@@ -6,7 +6,7 @@ class Ability
     #
     #user ||= User.new # guest user (not logged in)
     if user.nil?
-      can :read, [Post, Tag, Comment]
+      can :read, [Post, Tag, Comment, Pool, TagAlias]
     elsif user.admin_role?
       can :manage, :all
     else

@@ -1,0 +1,21 @@
+.row
+	.col-md-6
+		.card
+			.card-body
+				h3 Посты
+				.row
+					.col-md-2
+						| Всего: #{@posts.count}
+					.col-md-5
+						= @posts.last.created_at.strftime("Последний: %m/%d/%Y")
+					.col-md-5
+						= link_to "Список", panel_posts_url
+	.col-md-6
+		.card
+			.card-body
+				h3 Синонимы
+				.row
+					.col-md-2
+						| Count: #{@posts.count}
+					.col-md-2
+						= link_to "all", panel_posts_url

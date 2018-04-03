@@ -13,5 +13,7 @@
 		    br
 		    | Rating: #{@post.rating} 
 		    br
+		    | Status: #{@post.status} 
+		    br
 		    | Uploader: 
 		    = link_to @post.user.username, "/posts?user=#{@post.user.username}"

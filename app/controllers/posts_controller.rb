@@ -67,6 +67,8 @@ class PostsController < ApplicationController
     #post_service.create
     respond_to do |format|
       if post_service.save?
+        post = post_service.post
+        ModerateTask.create(task_type: 0, model_type: 0, model_id: post.id, creator: post.user)
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
@@ -115,7 +117,7 @@ class PostsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.includes(:tags).includes(:comments).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

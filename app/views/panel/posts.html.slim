@@ -1,0 +1,21 @@
+=paginate @posts
+- @posts.each do |post|
+	.row
+		.col-md-12
+			.card
+				.card-body
+					.row
+						.col-md-2
+							= image_tag post.image.thumb, class: "img-fluid",  height: "75px"
+						.col-md-10
+							.row
+								.col-md-2
+									| Id: #{post.id}
+									br
+									| Uploader: #{post.user.username}
+									br
+									| Date: #{@posts.last.created_at.strftime("%d/%m/%Y")}
+								.col-md-10
+									| Tags: #{post.tags.first(5).map(&:name).join(" ")}
+							.col-md-2
+								= link_to "Ссылка", post_url(post)

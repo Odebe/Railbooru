@@ -1,0 +1,12 @@
+= simple_form_for(@moderate_task) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :task_type
+    = f.input :model_type
+    = f.input :model_id
+    = f.input :creator
+    = f.input :passer
+
+  .form-actions
+    = f.button :submit

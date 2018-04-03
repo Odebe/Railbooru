@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
+  resources :moderate_tasks
   devise_for :users
   resources :users, only: [:show, :index]
   
   #get 'tags/index'
 
   get 'posts/autocomplete'
-  #get 'gallery/index'#, as: "gallery"
-=begin
-  controller :gallery do
-  	get "gallery" => :index
-  end
-=end
+  #get 'panel/index'
+  #resources :panel, only: [:index, :posts]
+
+  #get '/panel', to: 'panel#index'
+  #get '/panel/posts', to: 'panel#posts'
+
   resources :posts do
   	resources :comments
 	end
